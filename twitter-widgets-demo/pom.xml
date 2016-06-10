@@ -16,6 +16,7 @@
     <properties>
         <jetty.plugin.version>9.3.10.M0</jetty.plugin.version>
         <javax.servlet-api.version>4.0.0-b01</javax.servlet-api.version>
+        <viritin.version>1.52</viritin.version>
     </properties>
 
 
@@ -49,6 +50,11 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-themes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin</groupId>
+            <artifactId>viritin</artifactId>
+            <version>${viritin.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

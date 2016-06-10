@@ -17,10 +17,18 @@ package org.vaadin.addon.twitter;
 
 import com.vaadin.shared.ui.JavaScriptComponentState;
 
-/**
- * Created by marco on 09/06/16.
- */
-public class ButtonState extends JavaScriptComponentState {
+public class TweetState extends JavaScriptComponentState {
 
-    public String buttonTarget;
+    public String tweetId;
+
+    public Tweet.Align align;
+
+    public Tweet.Conversation conversation = Tweet.Conversation.all;
+
+    public Tweet.Cards cards = Tweet.Cards.visible;
+
+    public String linkColor;
+
+    public Tweet.Theme theme = Tweet.Theme.light;
+
 }
