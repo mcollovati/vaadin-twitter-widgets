@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2016 Marco Collovati (mcollovati@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +15,20 @@
  */
 package org.vaadin.addon.twitter;
 
-import com.vaadin.shared.ui.JavaScriptComponentState;
-
 /**
  * Created by marco on 09/06/16.
  */
-public class ButtonState extends JavaScriptComponentState {
+public class TweetButtonState extends BaseWidgetState {
 
-    public String buttonTarget;
+    public String text;
+
+    public Alignment align;
+
+    public TweetButton.Count count = TweetButton.Count.horizontal;
+
+    public TweetButton.Size size = TweetButton.Size.medium;
+
+    public TweetButton.Type buttonType;
+
+    public boolean showScreenName = true;
 }

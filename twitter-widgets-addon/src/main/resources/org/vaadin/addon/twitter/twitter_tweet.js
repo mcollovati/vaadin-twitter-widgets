@@ -3,20 +3,17 @@ window.org_vaadin_addon_twitter_Tweet = function() {
     var optsNames = ["align", "conversation", "cards", "linkColor", "theme"];
 
     var createOptions = function(state) {
-        var opts = { width: "auto" };
-        optsNames.forEach(function(key) {
-            if (state.hasOwnProperty(key) && state[key]) {
-                opts[key] = state[key];
-            }
-        });
-        console.log("=============== OPTS", opts);
+        var opts = window.vaadinTwttr.mergeOptions(state, optsNames);
+        opts.width = "auto";
+        //console.log("=============== OPTS", opts);
         return opts;
     }
 
-    var createTweet = function(state) {
-        window.twttr.widgets.createTweet(me.getState().tweetId, me.getElement(), createOptions(me.getState()))
+    var createTweet = function() {
+        window.twttr.widgets.createTweet(me.getState().primaryArgument, me.getElement(), createOptions(me.getState()))
         .then(function (el) {
-            console.log("@ev's Tweet has been displayed.")
+            // TODO: callback to java component?
+            //console.log("@ev's Tweet has been displayed.")
         });
     }
 

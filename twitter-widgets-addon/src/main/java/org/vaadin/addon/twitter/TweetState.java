@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2016 Marco Collovati (mcollovati@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +15,11 @@
  */
 package org.vaadin.addon.twitter;
 
-import com.vaadin.shared.ui.JavaScriptComponentState;
+public class TweetState extends BaseWidgetState {
 
-public class TweetState extends JavaScriptComponentState {
+    //public String tweetId;
 
-    public String tweetId;
-
-    public Tweet.Align align;
+    public Alignment align;
 
     public Tweet.Conversation conversation = Tweet.Conversation.all;
 

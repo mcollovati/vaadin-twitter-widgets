@@ -15,9 +15,26 @@
  */
 package org.vaadin.addon.twitter;
 
-import com.vaadin.annotations.JavaScript;
-import com.vaadin.ui.AbstractJavaScriptComponent;
+import com.vaadin.shared.ui.JavaScriptComponentState;
 
-@JavaScript({"twitter_widgets.js","twitter_timeline.js"})
-public class Timeline extends AbstractJavaScriptComponent {
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+/**
+ * Common options for all widgets;
+ */
+public abstract class BaseWidgetState extends JavaScriptComponentState {
+
+    public String primaryArgument;
+
+    public boolean dnt = false;
+
+    public Set<String> hashtags = new LinkedHashSet<>();
+
+    public String lang = "en";
+
+    public Set<String> related = new LinkedHashSet<>();
+
+    public String via;
+
 }
