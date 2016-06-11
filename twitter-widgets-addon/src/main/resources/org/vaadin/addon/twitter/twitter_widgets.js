@@ -14,3 +14,29 @@ window.twttr = (function(d, s, id) {
 
   return t;
 }(document, "script", "twitter-wjs"));
+window.twttr.ready(function() {
+    window.vaadinTwttr = function() {
+        if (window.vaadinTwttr) return window.vaadinTwttr;
+        var t = {};
+        var identityFn = function(a) { return a; };
+        var arrayToStringList = function(arr) { return (arr || []).join(",")};
+        var commonOptsNames = ["dnt", { key: "hashtags", map: arrayToStringList }, "lang",
+                               { key: "related", map: arrayToStringList }, "via"];
+        var applyOptions = function(state, optsNames, opts) {
+            opts = opts || {};
+            optsNames.forEach(function(optObj) {
+                var key = optObj.key || optObj;
+                var mapFn = optObj.map || identityFn;
+                if (state.hasOwnProperty(key) && state[key]) {
+                    opts[key] = mapFn(state[key]);
+                }
+            });
+            return opts;
+        };
+
+        t.mergeOptions = function(state, widgetOptions) {
+            return applyOptions(state, commonOptsNames.concat(widgetOptions || []));
+        };
+        return t;
+    }();
+});

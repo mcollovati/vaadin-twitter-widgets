@@ -16,13 +16,8 @@
 package org.vaadin.addon.twitter;
 
 /**
- * Created by marco on 09/06/16.
+ * Tweet widget alignment.
  */
-public class ButtonState extends BaseWidgetState {
-
-    Alignment align;
-
-    Button.Count count = Button.Count.horizontal;
-
-    Button.Size size = Button.Size.medium;
+public enum Alignment {
+    left, center, right;
 }

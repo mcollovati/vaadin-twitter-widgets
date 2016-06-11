@@ -15,7 +15,6 @@
  */
 package org.vaadin.addon.twitter;
 
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.Test;
 

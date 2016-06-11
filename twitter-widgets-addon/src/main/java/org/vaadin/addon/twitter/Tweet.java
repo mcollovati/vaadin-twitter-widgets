@@ -16,7 +16,6 @@
 package org.vaadin.addon.twitter;
 
 import com.vaadin.annotations.JavaScript;
-import com.vaadin.ui.AbstractJavaScriptComponent;
 
 import java.util.Objects;
 
@@ -24,8 +23,8 @@ import java.util.Objects;
  * Embeds a Single Tweet numerical ID of the desired Tweet.
  *
  */
-@JavaScript({"twitter_widgets.js", "twitter_tweet.js"})
-public class Tweet extends AbstractJavaScriptComponent {
+@JavaScript("twitter_tweet.js")
+public class Tweet extends AbstractWidget<Tweet, TweetState> {
 
     /**
      * Creates a new component to embed a single Tweet.
@@ -64,7 +63,7 @@ public class Tweet extends AbstractJavaScriptComponent {
      * @param align The alignment of the tweet
      * @return the object itself for further configuration
      */
-    public Tweet withAlign(Align align) {
+    public Tweet withAlign(Alignment align) {
         getState().align = Objects.requireNonNull(align, "align must not be null");
         return this;
     }
@@ -74,7 +73,7 @@ public class Tweet extends AbstractJavaScriptComponent {
      *
      * @return the alignment of the Tweet relative to its container
      */
-    public Align getAlign() {
+    public Alignment getAlign() {
         return getState(false).align;
     }
 
@@ -220,6 +219,7 @@ public class Tweet extends AbstractJavaScriptComponent {
         return getState(false).theme;
     }
 
+    /*
     @Override
     protected TweetState getState(boolean markAsDirty) {
         return (TweetState) super.getState(markAsDirty);
@@ -229,6 +229,7 @@ public class Tweet extends AbstractJavaScriptComponent {
     protected TweetState getState() {
         return (TweetState) super.getState();
     }
+    */
 
     /**
      * Tweet widgets colorschemes.
@@ -249,13 +250,6 @@ public class Tweet extends AbstractJavaScriptComponent {
      */
     public enum Conversation {
         none, all;
-    }
-
-    /**
-     * Tweet widget alignment.
-     */
-    public enum Align {
-        left, center, right;
     }
 
 }

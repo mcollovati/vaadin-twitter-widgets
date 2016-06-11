@@ -15,13 +15,11 @@
  */
 package org.vaadin.addon.twitter;
 
-import com.vaadin.shared.ui.JavaScriptComponentState;
-
-public class TweetState extends JavaScriptComponentState {
+public class TweetState extends BaseWidgetState {
 
     public String tweetId;
 
-    public Tweet.Align align;
+    public Alignment align;
 
     public Tweet.Conversation conversation = Tweet.Conversation.all;
 

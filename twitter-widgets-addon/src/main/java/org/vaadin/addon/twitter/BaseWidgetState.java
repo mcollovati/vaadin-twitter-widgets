@@ -15,14 +15,24 @@
  */
 package org.vaadin.addon.twitter;
 
+import com.vaadin.shared.ui.JavaScriptComponentState;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 /**
- * Created by marco on 09/06/16.
+ * Common options for all widgets;
  */
-public class ButtonState extends BaseWidgetState {
+public abstract class BaseWidgetState extends JavaScriptComponentState {
 
-    Alignment align;
+    public boolean dnt = false;
 
-    Button.Count count = Button.Count.horizontal;
+    public Set<String> hashtags = new LinkedHashSet<>();
 
-    Button.Size size = Button.Size.medium;
+    public String lang = "en";
+
+    public Set<String> related = new LinkedHashSet<>();
+
+    public String via;
+
 }
