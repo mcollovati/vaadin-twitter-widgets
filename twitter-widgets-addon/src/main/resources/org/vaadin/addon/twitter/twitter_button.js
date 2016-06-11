@@ -1,4 +1,4 @@
-window.org_vaadin_addon_twitter_Button = function() {
+window.org_vaadin_addon_twitter_TweetButton = function() {
     var me = this;
     var optsNames = ["align", "count", "size", "text",
                      { key: "showScreenName", map: function(val) { return (val === false) ? false : true }}];
@@ -22,5 +22,4 @@ window.org_vaadin_addon_twitter_Button = function() {
     me.onStateChange = function() {
         window.twttr.ready(createButton);
     };
-
 };

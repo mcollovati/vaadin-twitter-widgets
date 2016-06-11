@@ -17,20 +17,48 @@ package org.vaadin.addon.twitter;
 
 import com.vaadin.annotations.JavaScript;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.Objects;
 
 @JavaScript("twitter_button.js")
-public class Button extends AbstractWidget<Button, ButtonState> {
+public class TweetButton extends AbstractWidget<TweetButton, TweetButtonState> {
 
 
-    private Button(String primaryArgument, Type buttonType) {
+    private TweetButton(String primaryArgument, Type buttonType) {
         getState().primaryArgument = Objects.requireNonNull(primaryArgument);
         getState().buttonType = Objects.requireNonNull(buttonType);
     }
 
-    public static Button follow(String screenName) {
-        return new Button(screenName, Type.Follow);
+    public static TweetButton follow(String screenName) {
+        return new TweetButton(screenName, Type.Follow);
     }
+    public static TweetButton hashtag(String hashtag) {
+        return new TweetButton(hashtag, Type.Hashtag);
+    }
+    public static TweetButton mention(String screenName) {
+        return new TweetButton(screenName, Type.Mention);
+    }
+    public static TweetButton share(String url) {
+        Objects.requireNonNull(url);
+        try {
+            return share(new URL(url).toURI());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid url: " + url, e);
+        }
+    }
+    private static TweetButton share(URI uri) {
+        return new TweetButton(uri.toString(), Type.Share);
+    }
+    public static TweetButton share(URL url) {
+        Objects.requireNonNull(url);
+        try {
+            return share(url.toURI());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid url: " + url, e);
+        }
+    }
+
 
     public String getPrimaryArgument() {
         return getState(false).primaryArgument;
@@ -40,7 +68,7 @@ public class Button extends AbstractWidget<Button, ButtonState> {
         return getState(false).buttonType;
     }
 
-    public Button withText(String text) {
+    public TweetButton withText(String text) {
         getState().text = text;
         return this;
     }
@@ -49,7 +77,7 @@ public class Button extends AbstractWidget<Button, ButtonState> {
         return getState(false).text;
     }
 
-    public Button withCount(Count count) {
+    public TweetButton withCount(Count count) {
         getState().count = count;
         return this;
     }
@@ -58,16 +86,16 @@ public class Button extends AbstractWidget<Button, ButtonState> {
         return getState(false).count;
     }
 
-    public Button withSize(Size size) {
+    public TweetButton withSize(Size size) {
         getState().size = size;
         return this;
     }
 
-    public Button medium() {
+    public TweetButton medium() {
         return withSize(Size.medium);
     }
 
-    public Button large() {
+    public TweetButton large() {
         return withSize(Size.large);
     }
 
@@ -75,17 +103,18 @@ public class Button extends AbstractWidget<Button, ButtonState> {
         return getState(false).size;
     }
 
-    public Button withScreenName(boolean visible) {
+    public TweetButton withScreenName(boolean visible) {
         getState().showScreenName = visible;
         return this;
     }
-    public Button hideScreenName() {
+    public TweetButton hideScreenName() {
         return withScreenName(false);
     }
 
-    public Button showScreenName() {
+    public TweetButton showScreenName() {
         return withScreenName(true);
     }
+
 
 
     public enum Type {

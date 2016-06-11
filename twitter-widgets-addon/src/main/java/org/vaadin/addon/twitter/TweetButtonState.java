@@ -18,17 +18,17 @@ package org.vaadin.addon.twitter;
 /**
  * Created by marco on 09/06/16.
  */
-public class ButtonState extends BaseWidgetState {
+public class TweetButtonState extends BaseWidgetState {
 
     public String text;
 
     public Alignment align;
 
-    public Button.Count count = Button.Count.horizontal;
+    public TweetButton.Count count = TweetButton.Count.horizontal;
 
-    public Button.Size size = Button.Size.medium;
+    public TweetButton.Size size = TweetButton.Size.medium;
 
-    public Button.Type buttonType;
+    public TweetButton.Type buttonType;
 
     public boolean showScreenName = true;
 }
