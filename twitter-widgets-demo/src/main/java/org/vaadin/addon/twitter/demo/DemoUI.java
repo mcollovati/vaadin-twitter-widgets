@@ -43,6 +43,7 @@ public class DemoUI extends UI
         tabSheet.setWidth("100%");
         tabSheet.setSizeFull();
         tabSheet.addTab(new TweetDemo()).setCaption("Single Tweet");
+        tabSheet.addTab(new ButtonDemo()).setCaption("Buttons");
 
 
         RichText info = new RichText("Docs");

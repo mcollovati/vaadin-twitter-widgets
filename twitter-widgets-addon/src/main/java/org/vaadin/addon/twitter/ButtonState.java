@@ -20,9 +20,15 @@ package org.vaadin.addon.twitter;
  */
 public class ButtonState extends BaseWidgetState {
 
-    Alignment align;
+    public String text;
 
-    Button.Count count = Button.Count.horizontal;
+    public Alignment align;
 
-    Button.Size size = Button.Size.medium;
+    public Button.Count count = Button.Count.horizontal;
+
+    public Button.Size size = Button.Size.medium;
+
+    public Button.Type buttonType;
+
+    public boolean showScreenName = true;
 }

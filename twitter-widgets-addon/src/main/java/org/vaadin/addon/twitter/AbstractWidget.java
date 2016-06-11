@@ -111,6 +111,13 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
         return Collections.unmodifiableSet(getState(false).hashtags);
     }
 
+    // Fluent heplers
+    public T withCaption(String caption) {
+        setCaption(caption);
+        return self();
+    }
+
+
     @SuppressWarnings("unchecked")
     protected final T self() {
         return (T) this;

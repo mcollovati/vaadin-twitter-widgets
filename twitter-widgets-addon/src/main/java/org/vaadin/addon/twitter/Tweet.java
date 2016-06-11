@@ -41,7 +41,7 @@ public class Tweet extends AbstractWidget<Tweet, TweetState> {
      * @return the ID of the Tweet to embed
      */
     public String getTweetId() {
-        return getState(false).tweetId;
+        return getState(false).primaryArgument;
     }
 
     private void setTweetId(String tweetId) {
@@ -54,7 +54,7 @@ public class Tweet extends AbstractWidget<Tweet, TweetState> {
         } catch (NumberFormatException ex) {
             throw new IllegalArgumentException(tweetId + " is not a valid tweet ID");
         }
-        getState().tweetId = tweetId;
+        getState().primaryArgument = tweetId;
     }
 
     /**

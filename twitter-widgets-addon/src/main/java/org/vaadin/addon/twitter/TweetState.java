@@ -17,7 +17,7 @@ package org.vaadin.addon.twitter;
 
 public class TweetState extends BaseWidgetState {
 
-    public String tweetId;
+    //public String tweetId;
 
     public Alignment align;
 

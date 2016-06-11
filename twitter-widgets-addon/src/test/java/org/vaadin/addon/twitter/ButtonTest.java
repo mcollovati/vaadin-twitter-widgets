@@ -15,26 +15,24 @@
  */
 package org.vaadin.addon.twitter;
 
-import com.vaadin.shared.ui.JavaScriptComponentState;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
+import org.assertj.core.api.Assertions;
+import org.junit.Test;
 
 /**
- * Common options for all widgets;
+ * Created by marco on 11/06/16.
  */
-public abstract class BaseWidgetState extends JavaScriptComponentState {
+public class ButtonTest {
 
-    public String primaryArgument;
+    @Test
+    public void primaryArgumentIsMandatoryForFollowButton() {
+        Assertions.assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Button.follow(null));
+    }
 
-    public boolean dnt = false;
-
-    public Set<String> hashtags = new LinkedHashSet<>();
-
-    public String lang = "en";
-
-    public Set<String> related = new LinkedHashSet<>();
-
-    public String via;
-
+    @Test
+    public void shouldCreateButtons() {
+        Assertions.assertThat(Button.follow("me"))
+            .extracting("type", "primaryArgument")
+            .contains(Button.Type.Follow, "me");
+    }
 }

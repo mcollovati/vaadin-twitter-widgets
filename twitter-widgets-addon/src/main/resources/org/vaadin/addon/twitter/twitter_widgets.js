@@ -27,7 +27,7 @@ window.twttr.ready(function() {
             optsNames.forEach(function(optObj) {
                 var key = optObj.key || optObj;
                 var mapFn = optObj.map || identityFn;
-                if (state.hasOwnProperty(key) && state[key]) {
+                if (state.hasOwnProperty(key) && (state[key] === false || state[key])) {
                     opts[key] = mapFn(state[key]);
                 }
             });
