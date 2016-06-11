@@ -1,5 +1,6 @@
 package org.vaadin.addon.twitter.demo;
 
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.addon.twitter.Tweet;
@@ -38,12 +39,19 @@ public class TweetDemo extends MCssLayout {
 
     private VerticalLayout createTweet(String caption, Consumer<Tweet> customizer) {
         MVerticalLayout verticalLayout = new MVerticalLayout()
-            .withFullWidth().withSpacing(true).withMargin(false);
+            //.withFullWidth()
+            .withSpacing(false).withMargin(false);
         Tweet tweet = new Tweet(tweetId);
+        tweet.setStyleName("single-tweet");
         customizer.accept(tweet);
         verticalLayout.add(
-            new MLabel(caption).withStyleName(ValoTheme.LABEL_LARGE)
-        ).expand(tweet);
+            new MLabel(caption).withStyleName("centered-caption")
+                .withStyleName(ValoTheme.LABEL_LARGE)
+                .withStyleName(ValoTheme.LABEL_COLORED),
+            tweet
+
+        ).alignAll(Alignment.TOP_CENTER); //.expand(tweet);
+        verticalLayout.setWidthUndefined();
         return verticalLayout;
     }
 
