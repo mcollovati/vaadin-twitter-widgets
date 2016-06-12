@@ -5,20 +5,22 @@ for integrate an application with Twitter using [Twitter for Websites](https://d
  
 Following widgets are implemented
 
-* Single Tweet
-* Timeline
-* Follow Button
-* Share Button
-* Hashtag Button
-* Mention Button
+* [Single Tweet](https://dev.twitter.com/web/embedded-tweets)
+* [Follow Button](https://dev.twitter.com/web/follow-button)
+* [Tweet Button](https://dev.twitter.com/web/tweet-button)
+* [Hashtag Button](https://dev.twitter.com/web/tweet-button/hashtag-button)
+* [Mention Button](https://dev.twitter.com/web/tweet-button/mention-button)
+* [Timeline](https://dev.twitter.com/web/embedded-timelines)
 
 For more information see [Twitter for Websites documentation](https://dev.twitter.com/web/overview).
 
 ## Online demo
 
-Try the add-on demo at <url of the online demo>
+Try the add-on demo at https://vaadindemo-mbf.rhcloud.com/twitter-widgets/
 
 ## Download release
+
+TODO: not yet published
 
 Official releases of this add-on are available at Vaadin Directory. For Maven instructions, download and reviews, 
 go to http://vaadin.com/addon/twitter-widgets
@@ -37,20 +39,26 @@ To see the demo, navigate to http://localhost:8080/
  
 ## Release notes
 
-### Version 1.0-SNAPSHOT
+### Version 1.0
 - Single Tweet
-- Timeline
 - Follow Button
-- Share Button
+- Tweet Button
 - Hashtag Button
 - Mention Button
+- Timeline
 
 ## Roadmap
 
 This component is developed as a hobby with no public roadmap or any guarantees of upcoming releases. 
 
 That said, the following features are planned for upcoming releases:
-- ...
+
+- [Moment](https://dev.twitter.com/web/embedded-moments)
+- [Single Tweet with Video](https://dev.twitter.com/web/embedded-video)
+- [Twitter Cards](https://dev.twitter.com/cards/overview)
+
+Investigation on [REST](https://dev.twitter.com/rest/public) 
+and [Streaming](https://dev.twitter.com/streaming/overview) APIs are also planned. 
 
 ## Issue tracking
 
@@ -77,10 +85,21 @@ Add-on is distributed under Apache License 2.0. For license terms, see LICENSE.t
 
 Here is a simple example on how to try out the add-on component:
 
-<...>
+```java
 
-For a more comprehensive example, see src/test/java/org/vaadin/template/demo/DemoUI.java
+    new CssLayout(
+        new Tweet(tweetId).withDarkTheme().withoutCards(),
+        TweetButton.share(url).withText("Share this!").large(),
+        TweetButton.hashtag("vaadin").withHashtag("vaadindirectory", "add-on"),
+        TweetButton.mention("vaadin").withVia("marcoc_753")
+            .withText("Test some twitter API")
+            .withRelated("twitterapi", "twitter")                    
+    );
+
+```
+
+For a more comprehensive example, see src/main/java/org/vaadin/addon/twitter/demo/DemoUI.java in demo project.
 
 ## API
 
-Twitter widgets for Vaadin JavaDoc is available online at <...>
+Twitter widgets for Vaadin JavaDoc is available online at https://vaadindemo-mbf.rhcloud.com/docs/twitter-widgets/api/
