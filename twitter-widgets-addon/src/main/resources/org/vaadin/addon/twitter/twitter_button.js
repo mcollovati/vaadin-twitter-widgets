@@ -22,14 +22,14 @@ window.org_vaadin_addon_twitter_TweetButton = function() {
         }
         el.innerText = previewTextMapper[buttonType](me.getState());
         return el;
-    }
+    };
     var optsNames = ["align", "count", "size", "text",
                      { key: "showScreenName", map: function(val) { return (val === false) ? false : true; }}];
 
     var createOptions = function(state) {
         var opts = window.vaadinTwttr.mergeOptions(state, optsNames);
         return opts;
-    }
+    };
 
     var createButton = function() {
         var state = me.getState();
@@ -40,7 +40,7 @@ window.org_vaadin_addon_twitter_TweetButton = function() {
             me.getElement().removeChild(me.previewElement);
             delete me.previewElement;
         });
-    }
+    };
 
 
     me.previewElement = createPreviewElement();

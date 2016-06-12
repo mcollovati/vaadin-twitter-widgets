@@ -5,9 +5,8 @@ window.org_vaadin_addon_twitter_Tweet = function() {
     var createOptions = function(state) {
         var opts = window.vaadinTwttr.mergeOptions(state, optsNames);
         opts.width = "auto";
-        //console.log("=============== OPTS", opts);
         return opts;
-    }
+    };
 
     var createTweet = function() {
         window.twttr.widgets.createTweet(me.getState().primaryArgument, me.getElement(), createOptions(me.getState()))

@@ -44,7 +44,7 @@ import java.util.Objects;
  *
  */
 @JavaScript("twitter_button.js")
-public class TweetButton extends AbstractWidget<TweetButton, TweetButtonState> {
+public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonState> {
 
 
     private TweetButton(String primaryArgument, Type buttonType) {
