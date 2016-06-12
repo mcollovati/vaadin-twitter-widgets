@@ -267,20 +267,53 @@ public class TweetButton extends AbstractWidget<TweetButton, TweetButtonState> {
      * Button type.
      */
     public enum Type {
-        Share, Follow, Hashtag, Mention
+        /**
+         * <a href="https://dev.twitter.com/web/follow-button">Share</a> button type.
+         */
+        Share,
+        /**
+         * <a href="https://dev.twitter.com/web/follow-button">Follow</a> button type.
+         */
+        Follow,
+        /**
+         * <a href="https://dev.twitter.com/web/tweet-button/hashtag-button">Hashtag</a> button type.
+         */
+        Hashtag,
+        /**
+         * <a href="https://dev.twitter.com/web/tweet-button/mention-button">Mention</a> button type.
+         */
+        Mention
     }
 
     /**
      * Count visibility.
      */
     public enum Count {
-        none, horizontal, vertical;
+        /**
+         * Hidden count.
+         */
+        none,
+        /**
+         * Horizontal count.
+         */
+        horizontal,
+        /**
+         * Vertical count.
+         */
+        vertical;
     }
 
     /**
      * Button size.
      */
     public enum Size {
-        medium, large;
+        /**
+         * Medium size.
+         */
+        medium,
+        /**
+         * Large size.
+         */
+        large;
     }
 }

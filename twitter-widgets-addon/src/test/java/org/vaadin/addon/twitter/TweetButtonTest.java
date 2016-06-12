@@ -33,9 +33,9 @@ public class TweetButtonTest {
         assertThatExceptionOfType(NullPointerException.class)
             .isThrownBy(() -> TweetButton.follow(null));
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> TweetButton.share((String)null));
+            .isThrownBy(() -> TweetButton.share((String) null));
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> TweetButton.share((URL)null));
+            .isThrownBy(() -> TweetButton.share((URL) null));
         assertThatExceptionOfType(NullPointerException.class)
             .isThrownBy(() -> TweetButton.hashtag(null));
         assertThatExceptionOfType(NullPointerException.class)

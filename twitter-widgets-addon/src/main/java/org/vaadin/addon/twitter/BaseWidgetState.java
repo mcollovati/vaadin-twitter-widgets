@@ -21,7 +21,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Common options for all widgets;
+ * Common shared state for all twitter widgets.
+ *
+ * @see com.vaadin.shared.AbstractComponentState
  */
 public abstract class BaseWidgetState extends JavaScriptComponentState {
 

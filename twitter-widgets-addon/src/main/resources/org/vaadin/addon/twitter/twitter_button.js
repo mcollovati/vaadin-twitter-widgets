@@ -10,7 +10,7 @@ window.org_vaadin_addon_twitter_TweetButton = function() {
             share: function(state) { return "Tweet"; },
             mention: function(state) { return "Tweet @" + state.primaryArgument; },
             hashtag: function(state) { return "Tweet #" + state.primaryArgument; },
-        }
+        };
 
         var buttonType = me.getState().buttonType.toLowerCase();
         var el = document.createElement("A");
@@ -24,7 +24,7 @@ window.org_vaadin_addon_twitter_TweetButton = function() {
         return el;
     }
     var optsNames = ["align", "count", "size", "text",
-                     { key: "showScreenName", map: function(val) { return (val === false) ? false : true }}];
+                     { key: "showScreenName", map: function(val) { return (val === false) ? false : true; }}];
 
     var createOptions = function(state) {
         var opts = window.vaadinTwttr.mergeOptions(state, optsNames);
@@ -39,7 +39,6 @@ window.org_vaadin_addon_twitter_TweetButton = function() {
             // TODO: callback to java component?
             me.getElement().removeChild(me.previewElement);
             delete me.previewElement;
-            console.log(state.buttonType + " button create with opts")
         });
     }
 

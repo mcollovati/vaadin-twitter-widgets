@@ -16,7 +16,10 @@
 package org.vaadin.addon.twitter;
 
 /**
- * Created by marco on 09/06/16.
+ * Shared state for {@link TweetButton}.
+ *
+ * @see BaseWidgetState
+ * @see com.vaadin.shared.AbstractComponentState
  */
 public class TweetButtonState extends BaseWidgetState {
 

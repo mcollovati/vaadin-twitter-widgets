@@ -201,7 +201,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
     /**
      * Sets the component's caption String.
      *
-     * @param caption
+     * @param caption the new caption <code>String</code> for the component
      * @return the object itself for further configuration
      * @see com.vaadin.ui.AbstractComponent#setCaption(String)
      */

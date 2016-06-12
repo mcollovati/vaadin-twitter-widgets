@@ -15,6 +15,11 @@
  */
 package org.vaadin.addon.twitter;
 
+/**
+ * Shared state for {@link Tweet} component.
+ *
+ * @see com.vaadin.shared.AbstractComponentState
+ */
 public class TweetState extends BaseWidgetState {
 
     public Alignment align;

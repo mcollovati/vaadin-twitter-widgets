@@ -235,21 +235,42 @@ public class Tweet extends AbstractWidget<Tweet, TweetState> {
      * Tweet widgets colorschemes.
      */
     public enum Theme {
-        light, dark;
+        /**
+         * Light theme.
+         */
+        light,
+        /**
+         * Dark theme.
+         */
+        dark;
     }
 
     /**
      * Twitter cards visibility.
      */
     public enum Cards {
-        hidden, visible;
+        /**
+         * Hide cards.
+         */
+        hidden,
+        /**
+         * Show cards.
+         */
+        visible;
     }
 
     /**
      * Tweet thread visibility.
      */
     public enum Conversation {
-        none, all;
+        /**
+         * Hide conversation thread.
+         */
+        none,
+        /**
+         * Show conversation thread.
+         */
+        all;
     }
 
 }

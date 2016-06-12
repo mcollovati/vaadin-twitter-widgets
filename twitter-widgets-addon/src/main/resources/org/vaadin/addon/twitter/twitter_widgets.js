@@ -1,7 +1,7 @@
 window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
-  if (d.getElementById(id)) return t;
+  if (d.getElementById(id)) { return t; }
   js = d.createElement(s);
   js.id = id;
   js.src = "https://platform.twitter.com/widgets.js";
@@ -15,11 +15,11 @@ window.twttr = (function(d, s, id) {
   return t;
 }(document, "script", "twitter-wjs"));
 window.twttr.ready(function() {
-    window.vaadinTwttr = function() {
-        if (window.vaadinTwttr) return window.vaadinTwttr;
+    window.vaadinTwttr = (function() {
+        if (window.vaadinTwttr) { return window.vaadinTwttr; }
         var t = {};
         var identityFn = function(a) { return a; };
-        var arrayToStringList = function(arr) { return (arr || []).join(",")};
+        var arrayToStringList = function(arr) { return (arr || []).join(","); };
         var commonOptsNames = ["dnt", { key: "hashtags", map: arrayToStringList }, "lang",
                                { key: "related", map: arrayToStringList }, "via"];
         var applyOptions = function(state, optsNames, opts) {
@@ -38,5 +38,5 @@ window.twttr.ready(function() {
             return applyOptions(state, commonOptsNames.concat(widgetOptions || []));
         };
         return t;
-    }();
+    }());
 });
