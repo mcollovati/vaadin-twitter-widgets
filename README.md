@@ -28,7 +28,7 @@ go to http://vaadin.com/addon/twitter-widgets
 ## Building and running demo
 
 ```
-git clone https://github.com/mcollovati/vaadin-twitter-widgets
+git clone https://github.com/mcollovati/vaadin-twitter-widgets                                                   
 mvn clean install
 cd demo
 mvn jetty:run

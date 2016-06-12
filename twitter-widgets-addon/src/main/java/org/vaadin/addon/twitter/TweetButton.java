@@ -86,7 +86,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
     }
 
     /**
-     * Creates a new <a href="https://dev.twitter.com/web/follow-button">Tweet button</a>
+     * Creates a new <a href="https://dev.twitter.com/web/tweet-button">Tweet button</a>
      * for the given url.
      *
      * @param url The url to be shared
@@ -102,7 +102,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
     }
 
     /**
-     * Creates a new <a href="https://dev.twitter.com/web/follow-button">Tweet button</a>
+     * Creates a new <a href="https://dev.twitter.com/web/tweet-button">Tweet button</a>
      * for the given url.
      *
      * @param url The url to be shared
@@ -268,7 +268,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      */
     public enum Type {
         /**
-         * <a href="https://dev.twitter.com/web/follow-button">Share</a> button type.
+         * <a href="https://dev.twitter.com/web/tweet-button">Share</a> button type.
          */
         Share,
         /**
