@@ -85,6 +85,18 @@ Add-on is distributed under Apache License 2.0. For license terms, see LICENSE.t
 
 Here is a simple example on how to try out the add-on component:
 
+addd a dependency to your pom
+
+```xml   
+    <dependency>
+        <groupId>org.vaadin.addon</groupId>
+        <artifactId>twitter-widgets</artifactId>
+        <version>ENTER LATEST VERSION</version>
+    </dependency>
+```
+
+and use the component in your code
+
 ```java
 
     new CssLayout(
