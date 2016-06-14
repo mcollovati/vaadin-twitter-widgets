@@ -16,8 +16,281 @@
 package org.vaadin.addon.twitter;
 
 import com.vaadin.annotations.JavaScript;
-import com.vaadin.ui.AbstractJavaScriptComponent;
 
-@JavaScript({"twitter_widgets.js","twitter_timeline.js"})
-public class Timeline extends AbstractJavaScriptComponent {
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Set;
+
+/**
+ * Embed multiple Tweets in a compact, single-column view.
+ *
+ * Display the latest Tweets from a single Twitter account, multiple accounts, or tap into the worldwide
+ * conversation around a topic grouped in a search result.
+ *
+ * A Twitter collection may be rendered in either a list or a responsive grid template.
+ *
+ * Documentation is taken from <a href="https://dev.twitter.com/web/overview">Twitter for Websites</a>.
+ */
+@JavaScript("twitter_timeline.js")
+public class Timeline extends AbstractWidget<Timeline, TimelineState> {
+
+
+    private Timeline(Datasource datasource, String primaryArgument) {
+        getState().datasource = datasource;
+        getState().primaryArgument = Objects.requireNonNull(primaryArgument);
+        if (primaryArgument.isEmpty()) {
+            throw new IllegalArgumentException("primary argument must no be empty or blank");
+        }
+    }
+
+    /**
+     * Creates a timeline with Tweets from an individual user identified
+     * by {@code screenName}.
+     *
+     * @param screenName a valid Twitter username.
+     * @return a timeline instance
+     */
+    public static Timeline profile(String screenName) {
+        return new Timeline(Datasource.profile, screenName);
+    }
+
+    /**
+     * Returns the datasource primary argument.
+     *
+     * Depending on {@link Datasource} type could be a screen name, a collection id,
+     * an url or a widget id.
+     *
+     * @return the datasource primary argument as string.
+     */
+    public String getDatasourcePrimaryArgument() {
+        return getState(false).primaryArgument;
+    }
+
+    /**
+     * Returns the datasource type of this timeline.
+     *
+     * @return the datasource type of this timeline
+     */
+    public Datasource getDatasource() {
+        return getState(false).datasource;
+    }
+
+    /**
+     * Apply the specified aria-polite behavior to the rendered timeline.
+     *
+     * @param ariaPolite aria-polite behavior.
+     * @return the object itself for further configuration
+     */
+    public Timeline withAriaPolite(AriaPolite ariaPolite) {
+        getState().ariaPolite = ariaPolite;
+        return this;
+    }
+
+    /**
+     * Returns the aria-polite behavior.
+     *
+     * @return the aria-polite behavior
+     */
+    public AriaPolite getAriaPolite() {
+        return getState(false).ariaPolite;
+    }
+
+    /**
+     * Adjust the color of borders inside the widget.
+     *
+     * @param borderColor Hexadecimal color value.
+     * @return the object itself for further configuration
+     */
+    public Timeline withBorderColor(String borderColor) {
+        getState().borderColor = borderColor;
+        return this;
+    }
+
+    /**
+     * Returns the color of borders.
+     *
+     * @return color value
+     */
+    public String getBorderColor() {
+        return getState(false).borderColor;
+    }
+
+
+    /**
+     * Set the chrome components that defines the display of design elements in the widget.
+     *
+     * @param chrome chrome components
+     * @return the object itself for further configuration
+     */
+    public Timeline withChrome(Chrome... chrome) {
+        if (chrome.length == 0) {
+            throw new IllegalArgumentException("At least one chrome component is required");
+        }
+        getState().chrome.clear();
+        getState().chrome.addAll(Arrays.asList(chrome));
+        return this;
+    }
+
+    /**
+     * Removes chrome components from the current configuration.
+     *
+     * @param chrome chrome components to remove
+     * @return the object itself for further configuration
+     */
+    public Timeline withoutChrome(Chrome... chrome) {
+        if (chrome.length == 0) {
+            getState().chrome.clear();
+        } else {
+            getState().chrome.removeAll(Arrays.asList(chrome));
+        }
+        return this;
+    }
+
+    /**
+     * Adds chrome components to the the current configuration.
+     *
+     * @param chrome chrome components to add
+     * @return the object itself for further configuration
+     */
+    public Timeline addChrome(Chrome... chrome) {
+        if (chrome.length == 0) {
+            throw new IllegalArgumentException("At least one chrome component is required");
+        }
+        getState().chrome.addAll(Arrays.asList(chrome));
+        return this;
+    }
+
+    /**
+     * Returns the chrome components applied to the widget.
+     *
+     * @return a list of chrome components
+     */
+    public Set<Chrome> getChrome() {
+        return Collections.unmodifiableSet(getState(false).chrome);
+    }
+
+    /**
+     * Sets the number of Tweets that must be displayed.
+     *
+     * {@code tweetLimit} must be between 1 and 20.
+     *
+     * Note that the height of the widget will be calculated based on specified tweetLimit
+     *
+     * @param tweetLimit number of Tweets that must be displayed
+     * @return the object itself for further configuration
+     * @throws IllegalArgumentException if {@code tweetLimit} is less than 1 or greater than 20
+     */
+    public Timeline withTweetLimit(int tweetLimit) {
+        if (tweetLimit < 1 || tweetLimit > 20) {
+            throw new IllegalArgumentException("Tweet limit must be between 1 and 20");
+        }
+        getState().tweetLimit = tweetLimit;
+        return this;
+    }
+
+    /**
+     * Returns the number of tweets that must be displayed.
+     *
+     * @return the number of tweets that must be displayed
+     */
+    public int getTweetLimit() {
+        return getState(false).tweetLimit;
+    }
+
+
+    /**
+     * The data source definition describes what content will hydrate the embedded timeline.
+     */
+    public enum Datasource {
+        /**
+         * Tweets from an individual user.
+         *
+         * Primary argument must be a valid screen name.
+         */
+        profile,
+        /**
+         * Individual Twitter user's likes.
+         *
+         * Primary argument must be a valid screen name.
+         */
+        likes,
+        /**
+         * Tweets from a collection.
+         *
+         * Primary argument must be a valid collection id.
+         */
+        collection,
+        /**
+         * Twitter list.
+         *
+         * Primary argument must be a valid screen name combined
+         * with a list id or slug (string identifier).
+         */
+        list,
+        /**
+         * Twitter content identified by URL.
+         *
+         * Primary argument must be a permalink to one of a profile,
+         * likes timeline, list, or collection.
+         */
+        url,
+        /**
+         * Use a timeline widget configuration.
+         *
+         * Primary argument must be a valid widget id.
+         */
+        widget
+    }
+
+    /**
+     * Display of design elements in the widget
+     */
+    public enum Chrome {
+        /**
+         * Hides the timeline header.
+         *
+         * Implementing sites must add their own Twitter attribution, link to the source timeline,
+         * and comply with other Twitter
+         * <a href="https://about.twitter.com/company/display-requirements">display requirements</a>.
+         */
+        noheader,
+        /**
+         * Hides the timeline footer and Tweet composer link, if included in the timeline widget type.
+         */
+        nofooter,
+        /**
+         * Removes all borders within the widget including borders surrounding the widget area and separating Tweets.
+         */
+        noborders,
+        /**
+         * Removes the widget's background color.
+         */
+        transparent,
+        /**
+         * Crops and hides the main timeline scrollbar, if visible.
+         *
+         * Please consider that hiding standard user interface components can affect
+         * the accessibility of your website.
+         */
+        noscrollbar
+    }
+
+    /**
+     * Aria-polite behavior.
+     */
+    public enum AriaPolite {
+        /**
+         * Polite.
+         */
+        polite,
+        /**
+         * Assertive.
+         */
+        assertive,
+        /**
+         * Rude.
+         */
+        rude
+    }
 }

@@ -53,11 +53,13 @@ public class DemoUI extends UI
         //tabSheet.setSizeFull();
         tabSheet.setWidth("100%");
         tabSheet.setSizeFull();
+        tabSheet.addTab(new TimelineDemo()).setCaption("Timeline");
         tabSheet.addTab(new TweetDemo()).setCaption("Single Tweet");
         tabSheet.addTab(new ButtonDemo(TweetButton.Type.Follow)).setCaption("Follow Button");
         tabSheet.addTab(new ButtonDemo(TweetButton.Type.Share)).setCaption("Share Button");
         tabSheet.addTab(new ButtonDemo(TweetButton.Type.Hashtag)).setCaption("Hashtag Button");
         tabSheet.addTab(new ButtonDemo(TweetButton.Type.Mention)).setCaption("Mention Button");
+
 
 
         RichText info = new RichText("Docs");
