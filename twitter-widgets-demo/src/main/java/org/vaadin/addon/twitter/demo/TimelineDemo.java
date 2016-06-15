@@ -4,12 +4,9 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.addon.twitter.Timeline;
-import org.vaadin.addon.twitter.Tweet;
 import org.vaadin.viritin.label.MLabel;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-
-import java.util.function.Consumer;
 
 /**
  * Created by marco on 14/06/16.
@@ -20,15 +17,25 @@ public class TimelineDemo extends MCssLayout {
         withFullWidth()
             .addComponents(
                 createTimeline("Profile Timeline",
-                    Timeline.profile("vaadin")
-                )
-            );
+                    Timeline.profile("vaadin")),
+                createTimeline("Likes Timeline",
+                    Timeline.likes("vaadin")),
+                createTimeline("Collection Timeline",
+                    Timeline.collection("393773266801659904")),
+                createTimeline("URL Timeline",
+                    Timeline.url("https://twitter.com/twitterdev/likes")),
+                createTimeline("Widget Timeline",
+                    Timeline.widget("738372609797173249")),
+                createTimeline("List Timeline",
+                    Timeline.list("vaadin", "vaadin-users"))
+        );
     }
 
     private VerticalLayout createTimeline(String caption, Timeline timeline) {
         MVerticalLayout verticalLayout = new MVerticalLayout()
             .withSpacing(false).withMargin(false);
-        timeline.setStyleName("tw-timeline");
+        timeline.addStyleName("tw-timeline");
+        timeline.addStyleName("tw-widget");
         timeline.setHeight("400px");
         verticalLayout.add(
             new MLabel(caption).withStyleName("centered-caption")

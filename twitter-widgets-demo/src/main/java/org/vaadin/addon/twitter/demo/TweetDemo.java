@@ -56,7 +56,8 @@ public class TweetDemo extends MCssLayout {
             //.withFullWidth()
             .withSpacing(false).withMargin(false);
         Tweet tweet = new Tweet(tweetId);
-        tweet.setStyleName("single-tweet");
+        tweet.addStyleName("tw-widget");
+        tweet.addStyleName("tw-single-tweet");
         customizer.accept(tweet);
         verticalLayout.add(
             new MLabel(caption).withStyleName("centered-caption")

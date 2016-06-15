@@ -12,14 +12,19 @@ window.org_vaadin_addon_twitter_Timeline = function() {
             ds.id = state.primaryArgument;
         },
         list: function(ds, state) {
-            // TODO
-            //ds.screenName = state.primaryArgument;
+            var m = state.primaryArgument.match(/^([^@]+)@(.+)$/);
+            if (m) {
+                ds.ownerScreenName = m[2];
+                ds.slug = m[1];
+            } else {
+                ds.id = state.primaryArgument;
+            }
         },
         url: function(ds, state) {
             ds.url = state.primaryArgument;
         },
         widget: function(ds, state) {
-            ds.id = state.primaryArgument;
+            ds.widgetId = state.primaryArgument;
         }
     };
     var createDataSource = function(state) {

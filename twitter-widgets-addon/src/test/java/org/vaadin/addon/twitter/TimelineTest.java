@@ -17,10 +17,10 @@ package org.vaadin.addon.twitter;
 
 import org.junit.Test;
 
+import java.net.URL;
 import java.util.EnumSet;
 import java.util.Random;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -31,20 +31,132 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 public class TimelineTest {
 
     @Test
-    public void createTimeline() {
+    public void createProfileTimeline() {
         Timeline timeline = Timeline.profile("user");
         assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("user");
         assertThat(timeline.getDatasource()).isEqualTo(Timeline.Datasource.profile);
     }
 
     @Test
-    public void timelineCreationShouldFailWithInvalidArguments() {
+    public void profileTimelineCreationShouldFailWithInvalidArguments() {
         assertThatExceptionOfType(NullPointerException.class)
             .isThrownBy(() -> Timeline.profile(null));
         assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> Timeline.profile(""))
             .withMessageContaining("must no be empty or blank");
     }
+
+    @Test
+    public void createLikesTimeline() {
+        Timeline timeline = Timeline.likes("user");
+        assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("user");
+        assertThat(timeline.getDatasource()).isEqualTo(Timeline.Datasource.likes);
+    }
+
+    @Test
+    public void likesTimelineCreationShouldFailWithInvalidArguments() {
+        assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Timeline.likes(null));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Timeline.likes(""))
+            .withMessageContaining("must no be empty or blank");
+    }
+
+    @Test
+    public void createCollectionTimeline() {
+        Timeline timeline = Timeline.collection("collectionId");
+        assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("collectionId");
+        assertThat(timeline.getDatasource()).isEqualTo(Timeline.Datasource.collection);
+    }
+
+    @Test
+    public void collectionTimelineCreationShouldFailWithInvalidArguments() {
+        assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Timeline.collection(null));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Timeline.collection(""))
+            .withMessageContaining("must no be empty or blank");
+    }
+
+    @Test
+    public void createUrlTimeline() throws Exception {
+        Timeline timeline = Timeline.url("https://twitter.com/twitterdev/likes");
+        assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("https://twitter.com/twitterdev/likes");
+        assertThat(timeline.getDatasource()).isEqualTo(Timeline.Datasource.url);
+        timeline = Timeline.url(new URL("https://twitter.com/twitterdev/likes"));
+        assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("https://twitter.com/twitterdev/likes");
+        assertThat(timeline.getDatasource()).isEqualTo(Timeline.Datasource.url);
+    }
+
+    @Test
+    public void urlTimelineCreationShouldFailWithInvalidArguments() {
+        assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Timeline.url((String)null));
+        assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Timeline.url((URL)null));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Timeline.url(""))
+            .withMessageContaining("Invalid url");
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Timeline.url(new URL("http://")))
+            .withMessageContaining("Invalid url");
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Timeline.url("http://"))
+            .withMessageContaining("Invalid url");
+    }
+
+    @Test
+    public void createWidgetTimeline() throws Exception {
+        Timeline timeline = Timeline.widget("123456");
+        assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("123456");
+        assertThat(timeline.getDatasource()).isEqualTo(Timeline.Datasource.widget);
+    }
+
+    @Test
+    public void widgetTimelineCreationShouldFailWithInvalidArguments() {
+        assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Timeline.widget(null));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Timeline.widget(""))
+            .withMessageContaining("must no be empty or blank");
+        // TODO: check long?
+    }
+
+    @Test
+    public void createListTimeline() throws Exception {
+        Timeline timeline = Timeline.list("username", "listname");
+        assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("listname@username");
+        assertThat(timeline.getDatasource()).isEqualTo(Timeline.Datasource.list);
+        timeline = Timeline.list("12345");
+        assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("12345");
+        assertThat(timeline.getDatasource()).isEqualTo(Timeline.Datasource.list);
+    }
+
+    @Test
+    public void listTimelineCreationShouldFailWithInvalidArguments() {
+        assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Timeline.list(null, null));
+        assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Timeline.list("user", null));
+        assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Timeline.list(null, "list"));
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Timeline.list("", "list"))
+            .withMessageContaining("must no be empty or blank");
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Timeline.list("user", " "))
+            .withMessageContaining("must no be empty or blank");
+
+
+        assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> Timeline.list(null));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Timeline.list(""))
+            .withMessageContaining("must no be empty or blank");
+        // TODO: check long?
+    }
+
 
     @Test
     public void testTweetLimitSettings() {

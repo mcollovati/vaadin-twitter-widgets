@@ -210,6 +210,22 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
         return self();
     }
 
+    /**
+     * Adds one or more style names to this component. Multiple styles can be
+     * specified as a space-separated list of style names. The style name will
+     * be rendered as a HTML class name, which can be used in a CSS definition.
+     *
+     * @param style the new style to be added to the component
+     * @return the object itself for further configuration
+     * @see com.vaadin.ui.AbstractComponent#addStyleName(String)
+     */
+    public T withStyleName(String... style) {
+        for (String s : style) {
+            addStyleName(s);
+        }
+        return self();
+    }
+
 
     @SuppressWarnings("unchecked")
     protected final T self() {

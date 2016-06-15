@@ -49,6 +49,7 @@ public class DemoUI extends UI
         Responsive.makeResponsive(this);
 
         TabSheet tabSheet = new TabSheet();
+        tabSheet.setStyleName("tw-demo-tab");
         tabSheet.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
         //tabSheet.setSizeFull();
         tabSheet.setWidth("100%");

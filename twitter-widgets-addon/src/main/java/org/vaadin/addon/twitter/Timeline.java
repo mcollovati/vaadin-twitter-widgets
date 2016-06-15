@@ -17,6 +17,9 @@ package org.vaadin.addon.twitter;
 
 import com.vaadin.annotations.JavaScript;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
@@ -39,7 +42,7 @@ public class Timeline extends AbstractWidget<Timeline, TimelineState> {
     private Timeline(Datasource datasource, String primaryArgument) {
         getState().datasource = datasource;
         getState().primaryArgument = Objects.requireNonNull(primaryArgument);
-        if (primaryArgument.isEmpty()) {
+        if (primaryArgument.trim().isEmpty()) {
             throw new IllegalArgumentException("primary argument must no be empty or blank");
         }
     }
@@ -48,7 +51,7 @@ public class Timeline extends AbstractWidget<Timeline, TimelineState> {
      * Creates a timeline with Tweets from an individual user identified
      * by {@code screenName}.
      *
-     * @param screenName a valid Twitter username.
+     * @param screenName a valid Twitter username
      * @return a timeline instance
      */
     public static Timeline profile(String screenName) {
@@ -56,10 +59,99 @@ public class Timeline extends AbstractWidget<Timeline, TimelineState> {
     }
 
     /**
+     * Creates a timeline with an individual Twitter user's likes.
+     *
+     * @param screenName a valid Twitter username
+     * @return a timeline instance
+     */
+    public static Timeline likes(String screenName) {
+        return new Timeline(Datasource.likes, screenName);
+    }
+
+    /**
+     * Creates a timeline with Tweets from a collection.
+     *
+     * @param collectionId a valid Twitter collection id
+     * @return a timeline instance
+     */
+    public static Timeline collection(String collectionId) {
+        return new Timeline(Datasource.collection, collectionId);
+    }
+
+    /**
+     * Creates a timeline with Twitter content that you have the URL for.
+     *
+     * Supported content includes profiles, likes, lists, and collections.
+     *
+     * @param url The permalink to one of a profile, likes timeline, list, or collection
+     * @return a timeline instance
+     */
+    public static Timeline url(String url) {
+        try {
+            return url(new URL(Objects.requireNonNull(url)));
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Invalid url: " + url, e);
+        }
+    }
+
+    /**
+     * Creates a timeline with Twitter content that you have the URL for.
+     *
+     * Supported content includes profiles, likes, lists, and collections.
+     *
+     * @param url The permalink to one of a profile, likes timeline, list, or collection
+     * @return a timeline instance
+     */
+    public static Timeline url(URL url) {
+        try {
+            return new Timeline(Datasource.url, url.toURI().toString());
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException("Invalid url: " + url, e);
+        }
+    }
+
+    /**
+     * Creates a timeline with a timeline widget configuration.
+     *
+     * @param widgetId A valid Twitter widget id
+     * @return a timeline instance
+     */
+    public static Timeline widget(String widgetId) {
+        return new Timeline(Datasource.widget, widgetId);
+    }
+
+    /**
+     * Creates a timeline with a Twitter list.
+     *
+     * @param screenName A valid Twitter screen name
+     * @param slug       The string identifier for a list
+     * @return a timeline instance
+     */
+    public static Timeline list(String screenName, String slug) {
+        if (Objects.requireNonNull(screenName).trim().isEmpty()) {
+            throw new IllegalArgumentException("screenName must no be empty or blank");
+        }
+        if (Objects.requireNonNull(slug).trim().isEmpty()) {
+            throw new IllegalArgumentException("slug must no be empty or blank");
+        }
+        return new Timeline(Datasource.list, String.format("%s@%s", slug, screenName));
+    }
+
+    /**
+     * Creates a timeline with a Twitter list.
+     *
+     * @param listId A valid Twitter list id
+     * @return a timeline instance
+     */
+    public static Timeline list(String listId) {
+        return new Timeline(Datasource.list, listId);
+    }
+
+    /**
      * Returns the datasource primary argument.
      *
      * Depending on {@link Datasource} type could be a screen name, a collection id,
-     * an url or a widget id.
+     * an url, a widget id or a combination of screenName and slug (slugId@screenName).
      *
      * @return the datasource primary argument as string.
      */
