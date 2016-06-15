@@ -34,6 +34,7 @@ window.twttr.ready(function() {
             return opts;
         };
 
+        t.arrayToStringList = arrayToStringList;
         t.mergeOptions = function(state, widgetOptions) {
             return applyOptions(state, commonOptsNames.concat(widgetOptions || []));
         };

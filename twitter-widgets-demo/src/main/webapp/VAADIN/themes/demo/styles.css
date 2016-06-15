@@ -12941,7 +12941,11 @@ div.v-layout.v-horizontal.v-widget {
 	text-align: center;
 }
 
-.demo .single-tweet {
+.demo .v-tabsheet-content-tw-demo-tab {
+	margin: 10px;
+}
+
+.demo .tw-widget {
 	width: 300px;
-	margin: 0 20px;
+	margin: 0 20px 20px 20px;
 }
