@@ -32,7 +32,7 @@ import java.util.function.Consumer;
  */
 public class ButtonDemo extends MCssLayout {
 
-    private String url = "http://vaadindemo-mbf.rhcloud.com/";
+    private String url = "https://vaadindemo-mbf.rhcloud.com/twitter-widgets/";
 
     private Map<TweetButton.Type, Consumer<MCssLayout>> generatorMap = new HashMap<>();
 

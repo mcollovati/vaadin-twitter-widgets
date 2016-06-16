@@ -1557,6 +1557,30 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: top;
 }
 
+@keyframes rotateFoldTop {
+		from {
+	}
+		to {
+		opacity: 0;
+		-webkit-transform: translateY(-100%) rotateX(90deg);
+		-moz-transform: translateY(-100%) rotateX(90deg);
+		-ms-transform: translateY(-100%) rotateX(90deg);
+		-o-transform: translateY(-100%) rotateX(90deg);
+		transform: translateY(-100%) rotateX(90deg);
+	}
+	}
+
+@keyframes moveFromBottomFade {
+		from {
+		opacity: 0.3;
+		-webkit-transform: translateY(100%);
+		-moz-transform: translateY(100%);
+		-ms-transform: translateY(100%);
+		-o-transform: translateY(100%);
+		transform: translateY(100%);
+	}
+	}
+
 .demo.v-app, .demo.v-app-loading {
 	font: 300 16px/1.55 "Open Sans", sans-serif;
 	color: #464646;
@@ -12935,6 +12959,33 @@ div.v-layout.v-horizontal.v-widget {
 	display: inline-block;
 	width: 19px;
 	overflow: hidden;
+}
+
+.demo .tw-docs {
+	font-size: 90%;
+	height: 100%;
+	overflow-y: auto;
+}
+
+.demo .tw-docs .tw-switch-out {
+	-webkit-transform-origin: 50% 100%;
+	-moz-transform-origin: 50% 100%;
+	-ms-transform-origin: 50% 100%;
+	-o-transform-origin: 50% 100%;
+	transform-origin: 50% 100%;
+	-webkit-animation: rotateFoldTop 0.5s both ease;
+	-moz-animation: rotateFoldTop 0.5s both ease;
+	animation: rotateFoldTop 0.5s both ease;
+}
+
+.demo .tw-docs .tw-switch-in {
+	-webkit-animation: moveFromBottomFade 0.5s both ease;
+	-moz-animation: moveFromBottomFade 0.5s both ease;
+	animation: moveFromBottomFade 0.5s both ease;
+}
+
+.demo .root-container {
+	padding: 10px;
 }
 
 .demo .centered-caption {

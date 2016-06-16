@@ -38,15 +38,16 @@ public class TweetDemo extends MCssLayout {
         //setSpacing(true);
         //setMargin(false);
         addComponents(
-            createTweet("Default", tweet -> {}),
+            createTweet("Default", tweet -> {
+            }),
             createTweet("Hidden cards", Tweet::withoutCards),
             createTweet("Hidden conversation", Tweet::withoutConversation),
             createTweet("Dark theme", Tweet::withDarkTheme),
             createTweet("Other options", tweet -> {
-                tweet.enableDoNotTrack();
-                tweet.withHashtag("pippo", "pluto");
-                tweet.withRelated("ligthbend", "DevoxxUK");
-                tweet.withVia("marcoc_753");
+                tweet.enableDoNotTrack()
+                    .withHashtag("pippo", "pluto")
+                    .withRelated("ligthbend", "DevoxxUK")
+                    .withVia("marcoc_753");
             })
         );
     }
