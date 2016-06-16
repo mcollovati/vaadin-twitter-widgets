@@ -14,7 +14,7 @@ window.org_vaadin_addon_twitter_Tweet = function() {
             // TODO: callback to java component?
             //console.log("@ev's Tweet has been displayed.")
         });
-    }
+    };
 
     me.onStateChange = function() {
         window.twttr.ready(createTweet);

@@ -36,5 +36,4 @@ public class TimelineState extends BaseWidgetState {
 
     public int tweetLimit;
 
-    // TODO: manage overrides?
 }

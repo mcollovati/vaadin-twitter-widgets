@@ -37,7 +37,7 @@ window.org_vaadin_addon_twitter_Timeline = function() {
 
     var optsNames = [
         "ariaPolite", "borderColor", "tweetLimit",
-        { key: "chrome", map: function(val) { return window.vaadinTwttr.arrayToStringList(val) || undefined; } }
+        { key: "chrome", map: function(val) { return window.vaadinTwttr.arrayToStringList(val) || null; } }
     ];
     var createOptions = function(state) {
         var opts = window.vaadinTwttr.mergeOptions(state, optsNames);

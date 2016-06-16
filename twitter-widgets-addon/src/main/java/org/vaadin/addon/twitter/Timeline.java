@@ -36,7 +36,7 @@ import java.util.Set;
  * Documentation is taken from <a href="https://dev.twitter.com/web/overview">Twitter for Websites</a>.
  */
 @JavaScript("twitter_timeline.js")
-public class Timeline extends AbstractWidget<Timeline, TimelineState> {
+public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
 
 
     private Timeline(Datasource datasource, String primaryArgument) {
@@ -336,7 +336,7 @@ public class Timeline extends AbstractWidget<Timeline, TimelineState> {
     }
 
     /**
-     * Display of design elements in the widget
+     * Display of design elements in the widget.
      */
     public enum Chrome {
         /**

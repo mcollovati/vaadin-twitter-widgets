@@ -19,5 +19,16 @@ package org.vaadin.addon.twitter;
  * Tweet widget alignment.
  */
 public enum Alignment {
-    left, center, right;
+    /**
+     * Align left.
+     */
+    left,
+    /**
+     * Align center.
+     */
+    center,
+    /**
+     * Align right.
+     */
+    right;
 }
