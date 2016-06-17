@@ -40,6 +40,7 @@ To see the demo, navigate to http://localhost:8080/
 ## Release notes
 
 ### Version 1.0
+
 - Single Tweet
 - Follow Button
 - Tweet Button
@@ -53,6 +54,8 @@ This component is developed as a hobby with no public roadmap or any guarantees 
 
 That said, the following features are planned for upcoming releases:
 
+- Better widget loading
+- Server side listeners for script events
 - [Moment](https://dev.twitter.com/web/embedded-moments)
 - [Single Tweet with Video](https://dev.twitter.com/web/embedded-video)
 - [Twitter Cards](https://dev.twitter.com/cards/overview)
