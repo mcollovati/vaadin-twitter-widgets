@@ -58,6 +58,23 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <configuration>
+                            <source>1.7</source>
+                            <target>1.7</target>
+                        </configuration>
+                    </execution>
+                    <!-- see https://maven.apache.org/guides/mini/guide-default-execution-ids.html -->
+                    <execution>
+                        <id>default-testCompile</id>
+                        <configuration>
+                            <source>${maven.compiler.source}</source>
+                            <target>${maven.compiler.target}</target>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -153,6 +170,7 @@
 
         <!-- This is needed for the sources required by the client-side compiler to be
             included in the produced JARs -->
+        <!--
         <resources>
             <resource>
                 <directory>src/main/java</directory>
@@ -164,7 +182,7 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-
+        -->
     </build>
 
 </project>
