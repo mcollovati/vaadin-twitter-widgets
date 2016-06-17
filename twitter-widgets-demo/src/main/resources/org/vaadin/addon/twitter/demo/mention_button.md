@@ -3,6 +3,8 @@
 Twitter widgets for Vaadin is a Vaadin 7 addon that provides UI components 
 to integrate an application with Twitter using [Twitter for Websites](https://dev.twitter.com/web/overview).
 
+This demo is powered by [Viritin](https://vaadin.com/directory#!addon/viritin).
+
 ## Follow button
 
 A [mention button](https://dev.twitter.com/web/tweet-button/mention-button) is a special type of 
