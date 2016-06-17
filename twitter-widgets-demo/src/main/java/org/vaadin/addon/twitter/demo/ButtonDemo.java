@@ -37,8 +37,7 @@ public class ButtonDemo extends MCssLayout {
     private Map<TweetButton.Type, Consumer<MCssLayout>> generatorMap = new HashMap<>();
 
     public ButtonDemo(TweetButton.Type buttonType) {
-        withFullWidth(); //.withSpacing(true).withMargin(true);
-        //setDefaultComponentAlignment(Alignment.TOP_CENTER);
+        withFullWidth();
         generatorMap.put(TweetButton.Type.Share, this::createShareButtons);
         generatorMap.put(TweetButton.Type.Follow, this::createFollowButtons);
         generatorMap.put(TweetButton.Type.Hashtag, this::createHashtagButtons);

@@ -43,7 +43,6 @@ import java.util.Scanner;
 @Title("Twitter widgets Add-on Demo")
 @Viewport("width=device-width, user-scalable=no, initial-scale=1.0")
 @SuppressWarnings("serial")
-@Push
 public class DemoUI extends UI {
 
     @WebServlet(value = "/*", asyncSupported = true)
