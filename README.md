@@ -20,10 +20,8 @@ Try the add-on demo at https://vaadindemo-mbf.rhcloud.com/twitter-widgets/
 
 ## Download release
 
-TODO: not yet published
-
 Official releases of this add-on are available at Vaadin Directory. For Maven instructions, download and reviews, 
-go to http://vaadin.com/addon/twitter-widgets
+go to https://vaadin.com/directory#!addon/twitter-widgets-for-vaadin.
 
 ## Building and running demo
 
