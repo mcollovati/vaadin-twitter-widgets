@@ -15,7 +15,6 @@
  */
 package org.vaadin.addon.twitter.demo;
 
-import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -51,7 +50,7 @@ public class DemoUI extends UI {
     }
 
 
-    private static final List<RichText> markdown = Arrays.asList(
+    private final List<RichText> markdown = Arrays.asList(
         readMarkdown("timeline.md"), readMarkdown("single_tweet.md"), readMarkdown("follow_button.md"),
         readMarkdown("share_button.md"), readMarkdown("hashtag_button.md"), readMarkdown("mention_button.md")
     );
