@@ -122,6 +122,26 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.igormaznitsa</groupId>
+                <artifactId>uber-pom</artifactId>
+                <version>1.0.1</version>
+                <configuration>
+                    <remove>
+                        <section>parent</section>
+                        <section>modules</section>
+                        <section>profiles/profile/modules</section>
+                    </remove>
+                    <removeSiblingDuplications>true</removeSiblingDuplications>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>upom</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <!-- Testing -->
             <plugin>
