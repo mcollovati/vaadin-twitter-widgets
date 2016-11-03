@@ -15,7 +15,8 @@
     <properties>
         <jetty.plugin.version>9.4.0.M0</jetty.plugin.version>
         <javax.servlet-api.version>4.0.0-b01</javax.servlet-api.version>
-        <viritin.version>1.52</viritin.version>
+        <viritin.version>2.0.alpha1</viritin.version>
+        <vaadin.version>8.0.2</vaadin.version>
     </properties>
 
 
@@ -60,6 +61,10 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>${javax.servlet-api.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-compatibility-themes</artifactId>
         </dependency>
     </dependencies>
 
@@ -112,7 +117,7 @@
                     <noServer>true</noServer>
                     <persistentunitcachedir>${basedir}/target/tmp/gwt-unitCache</persistentunitcachedir>
                     <compileReport>false</compileReport>
-                    <strict>true</strict>
+                    <!-- <strict>true</strict> -->
                     <runTarget>http://localhost:8080/</runTarget>
                 </configuration>
                 <executions>

@@ -55,4 +55,8 @@ $darkgreen: darken($green, 30%);
         width: 300px;
         margin: 0 20px 20px 20px;
     }
+
+    .v-label-undef-w {
+        white-space: pre-wrap;
+    }
 }
