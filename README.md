@@ -16,7 +16,7 @@ For more information see [Twitter for Websites documentation](https://dev.twitte
 
 ## Online demo
 
-Try the add-on demo at https://vaadindemo-mbf.rhcloud.com/twitter-widgets/
+Try the add-on demo at https://mbf-vaadin-twitter-widgets.herokuapp.com/
 
 ## Download release
 
@@ -115,4 +115,4 @@ For a more comprehensive example, see src/main/java/org/vaadin/addon/twitter/dem
 
 ## API
 
-Twitter widgets for Vaadin JavaDoc is available online at https://vaadindemo-mbf.rhcloud.com/docs/twitter-widgets/api/
+Twitter widgets for Vaadin JavaDoc is available online at https://mbf-vaadindemo.herokuapp.com/docs/twitter-widgets/api/
