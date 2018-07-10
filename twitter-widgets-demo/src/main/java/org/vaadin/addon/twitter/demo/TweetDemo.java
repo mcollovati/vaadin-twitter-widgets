@@ -15,29 +15,24 @@
  */
 package org.vaadin.addon.twitter.demo;
 
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.addon.twitter.Tweet;
-import org.vaadin.viritin.label.MLabel;
-import org.vaadin.viritin.layouts.MCssLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
-
 import java.util.function.Consumer;
+
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
+import org.vaadin.addon.twitter.Tweet;
 
 /**
  * Created by marco on 10/06/16.
  */
-public class TweetDemo extends MCssLayout {
+@Route(value = "tweet", layout = DemoUI.class)
+public class TweetDemo extends DemoComponent {
 
-    private String tweetId = "677563930122821632";
+    private String tweetId = "1015915654053093376";
 
 
     public TweetDemo() {
-        withFullWidth();
-        //setSpacing(true);
-        //setMargin(false);
-        addComponents(
+        add(
             createTweet("Default", tweet -> {
             }),
             createTweet("Hidden cards", Tweet::withoutCards),
@@ -52,22 +47,23 @@ public class TweetDemo extends MCssLayout {
         );
     }
 
-    private VerticalLayout createTweet(String caption, Consumer<Tweet> customizer) {
-        MVerticalLayout verticalLayout = new MVerticalLayout()
-            //.withFullWidth()
-            .withSpacing(false).withMargin(false);
-        Tweet tweet = new Tweet(tweetId);
-        tweet.addStyleName("tw-widget");
-        tweet.addStyleName("tw-single-tweet");
-        customizer.accept(tweet);
-        verticalLayout.add(
-            new MLabel(caption).withStyleName("centered-caption")
-                .withStyleName(ValoTheme.LABEL_LARGE)
-                .withStyleName(ValoTheme.LABEL_COLORED),
-            tweet
 
-        ).alignAll(Alignment.TOP_CENTER); //.expand(tweet);
-        verticalLayout.setWidthUndefined();
+    private VerticalLayout createTweet(String caption, Consumer<Tweet> customizer) {
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setSpacing(false);
+        verticalLayout.setMargin(false);
+        Tweet tweet = new Tweet(tweetId);
+        tweet.addClassNames("tw-widget", "tw-single-tweet");
+        customizer.accept(tweet);
+
+        Label label = new Label(caption);
+        label.setWidth("100%");
+        label.addClassNames("centered-caption", "font-size-l", "primary-text");
+        verticalLayout.add(
+            label, tweet
+        );
+        verticalLayout.setAlignItems(Alignment.CENTER); //.expand(tweet);
+        verticalLayout.setWidth(null);
         return verticalLayout;
     }
 

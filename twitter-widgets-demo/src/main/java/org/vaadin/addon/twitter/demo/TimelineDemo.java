@@ -15,50 +15,55 @@
  */
 package org.vaadin.addon.twitter.demo;
 
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 import org.vaadin.addon.twitter.Timeline;
-import org.vaadin.viritin.label.MLabel;
-import org.vaadin.viritin.layouts.MCssLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * Created by marco on 14/06/16.
  */
-public class TimelineDemo extends MCssLayout {
+@Route(value = "", layout = DemoUI.class)
+@RouteAlias("timeline")
+public class TimelineDemo extends DemoComponent {
 
     public TimelineDemo() {
-        withFullWidth()
-            .addComponents(
-                createTimeline("Profile Timeline",
-                    Timeline.profile("vaadin")),
-                createTimeline("Likes Timeline",
-                    Timeline.likes("vaadin")),
-                createTimeline("Collection Timeline",
-                    Timeline.collection("393773266801659904")),
-                createTimeline("URL Timeline",
-                    Timeline.url("https://twitter.com/twitterdev/likes")),
-                createTimeline("Widget Timeline",
-                    Timeline.widget("738372609797173249")),
-                createTimeline("List Timeline",
-                    Timeline.list("vaadin", "vaadin-users"))
+        add(
+            createTimeline("Profile Timeline",
+                Timeline.profile("vaadin")),
+            createTimeline("Likes Timeline",
+                Timeline.likes("vaadin")
+                    .withBorderColor("green")
+                .withChrome(Timeline.Chrome.noheader, Timeline.Chrome.nofooter)
+                .withTweetLimit(2)
+                .enableDoNotTrack()
+                .withHashtag("#vaadin", "#twitter")
+            ),
+            createTimeline("Collection Timeline",
+                Timeline.collection("393773266801659904")),
+            createTimeline("URL Timeline",
+                Timeline.url("https://twitter.com/twitterdev/likes")),
+            createTimeline("Widget Timeline",
+                Timeline.widget("738372609797173249")),
+            createTimeline("List Timeline",
+                Timeline.list("vaadin", "vaadin-users"))
         );
     }
 
     private VerticalLayout createTimeline(String caption, Timeline timeline) {
-        MVerticalLayout verticalLayout = new MVerticalLayout()
-            .withSpacing(false).withMargin(false);
-        timeline.addStyleName("tw-timeline");
-        timeline.addStyleName("tw-widget");
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setSpacing(false);
+        verticalLayout.setMargin(false);
+        timeline.addClassNames("tw-timeline", "tw-widget");
         timeline.setHeight("400px");
-        verticalLayout.add(
-            new MLabel(caption).withStyleName("centered-caption")
-                .withStyleName(ValoTheme.LABEL_LARGE)
-                .withStyleName(ValoTheme.LABEL_COLORED),
-            timeline
-        ).alignAll(Alignment.TOP_CENTER);
-        verticalLayout.setWidthUndefined();
+
+        Label label = new Label(caption);
+        label.addClassNames("centered-caption", "font-size-l", "primary-text");
+        verticalLayout.add(label, timeline);
+        verticalLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+        verticalLayout.setWidth(null);
         return verticalLayout;
     }
 

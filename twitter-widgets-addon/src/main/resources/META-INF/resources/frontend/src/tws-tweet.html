@@ -1,0 +1,46 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="tws-loader.html">
+<link rel="import" href="tws-common.html">
+
+<dom-module id="tws-tweet">
+    <template>
+        <div id="twsContainer"></div>
+    </template>
+
+    <script>
+        class TwsTweet extends TwsCommonsMixin(Polymer.Element) {
+
+            constructor() {
+                super();
+                this._optsNames = ["align", "conversation", "cards", "linkColor", "theme"];
+            }
+
+            static get is() {
+                return 'tws-tweet'
+            }
+
+            static get properties() {
+                return {
+                    conversation: String,
+                    cards: String,
+                    linkColor: String,
+                    theme: String
+                }
+            }
+
+            _render() {
+                window.twttr.widgets.createTweet(
+                    this.primaryArgument, this.$.twsContainer, this._createOptions()
+                ).then(el => console.log("Tweet loaded", el));
+                console.log("================== CONFIG", this._createOptions());
+            }
+
+            ready() {
+                super.ready();
+                window.twttr.ready(() => this._render());
+            }
+
+        }
+        customElements.define(TwsTweet.is, TwsTweet);
+    </script>
+</dom-module>

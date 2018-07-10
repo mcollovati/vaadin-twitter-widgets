@@ -15,51 +15,68 @@
  */
 package org.vaadin.addon.twitter.demo;
 
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.addon.twitter.TweetButton;
-import org.vaadin.viritin.label.MLabel;
-import org.vaadin.viritin.layouts.MCssLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasComponents;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.BeforeEvent;
+import com.vaadin.flow.router.HasUrlParameter;
+import com.vaadin.flow.router.Route;
+import org.vaadin.addon.twitter.TweetButton;
+
 /**
  * Created by marco on 11/06/16.
  */
-public class ButtonDemo extends MCssLayout {
+@Route(value = "button", layout = DemoUI.class)
+public class ButtonDemo extends DemoComponent implements HasUrlParameter<String> {
 
-    private String url = "https://vaadindemo-mbf.rhcloud.com/twitter-widgets/";
+    private static String url = "https://vaadindemo-mbf.rhcloud.com/twitter-widgets/";
+    private static final Map<TweetButton.Type, Consumer<HasComponents>> generatorMap = new HashMap<>();
 
-    private Map<TweetButton.Type, Consumer<MCssLayout>> generatorMap = new HashMap<>();
+    static {
+        generatorMap.put(TweetButton.Type.Share, ButtonDemo::createShareButtons);
+        generatorMap.put(TweetButton.Type.Follow, ButtonDemo::createFollowButtons);
+        generatorMap.put(TweetButton.Type.Hashtag, ButtonDemo::createHashtagButtons);
+        generatorMap.put(TweetButton.Type.Mention, ButtonDemo::createMentionButtons);
+    }
 
-    public ButtonDemo(TweetButton.Type buttonType) {
-        withFullWidth();
-        generatorMap.put(TweetButton.Type.Share, this::createShareButtons);
-        generatorMap.put(TweetButton.Type.Follow, this::createFollowButtons);
-        generatorMap.put(TweetButton.Type.Hashtag, this::createHashtagButtons);
-        generatorMap.put(TweetButton.Type.Mention, this::createMentionButtons);
-        generatorMap.get(buttonType).accept(this);
+    private TweetButton.Type buttonType;
+
+    public ButtonDemo() {
     }
 
 
-    private Component makeButtonContainer(TweetButton tweetButton, String caption) {
-        return new MVerticalLayout(
-            new MLabel(caption).withWidth("-1")
-                .withStyleName("centered-caption")
-                .withStyleName(ValoTheme.LABEL_LARGE)
-                .withStyleName(ValoTheme.LABEL_COLORED),
+    @Override
+    public void setParameter(BeforeEvent event, String parameter) {
+        this.removeAll();
+        if (parameter != null) {
+            this.buttonType = TweetButton.Type.valueOf(parameter);
+            generatorMap.get(buttonType).accept(this);
+        }
+    }
+
+    private static Component makeButtonContainer(TweetButton tweetButton, String caption) {
+        Label label = new Label(caption);
+        label.setWidth(null);
+        label.addClassNames("centered-caption", "font-size-l", "primary-text");
+        VerticalLayout div = new VerticalLayout(label,
             tweetButton.withStyleName("tw-widget", "tw-button", "centered-caption")
-        ).withSpacing(false).withMargin(false)
-            .alignAll(Alignment.TOP_CENTER)
-            .withWidth("-1");
+        );
+        div.setAlignItems(FlexComponent.Alignment.CENTER);
+        div.setWidth(null);
+        div.setMargin(false);
+        div.setSpacing(false);
+        return div;
     }
 
-    private void createShareButtons(MCssLayout layout) {
-        layout.addComponents(
+    private static void createShareButtons(HasComponents layout) {
+        layout.add(
             makeButtonContainer(TweetButton.share(url), "Default"),
             makeButtonContainer(TweetButton.share(url).withText("Share this!"), "Custom text"),
             makeButtonContainer(TweetButton.share(url).large(), "Large"),
@@ -70,9 +87,9 @@ public class ButtonDemo extends MCssLayout {
         );
     }
 
-    private void createHashtagButtons(MCssLayout layout) {
+    private static void createHashtagButtons(HasComponents layout) {
         String hashtag = "vaadin";
-        layout.addComponents(
+        layout.add(
             makeButtonContainer(TweetButton.hashtag(hashtag), "Default"),
             makeButtonContainer(TweetButton.hashtag(hashtag).withText("Share this addon!"), "Custom text"),
             makeButtonContainer(TweetButton.hashtag(hashtag).large(), "Large"),
@@ -83,9 +100,9 @@ public class ButtonDemo extends MCssLayout {
         );
     }
 
-    private void createMentionButtons(MCssLayout layout) {
+    private static void createMentionButtons(HasComponents layout) {
         String screenName = "marcoc_753";
-        layout.addComponents(
+        layout.add(
             makeButtonContainer(TweetButton.mention(screenName), "Default"),
             makeButtonContainer(TweetButton.mention(screenName).withText("Got your addon!"), "Custom text"),
             makeButtonContainer(TweetButton.mention(screenName).large(), "Large"),
@@ -96,8 +113,8 @@ public class ButtonDemo extends MCssLayout {
         );
     }
 
-    private void createFollowButtons(MCssLayout layout) {
-        layout.addComponents(
+    private static void createFollowButtons(HasComponents layout) {
+        layout.add(
             makeButtonContainer(TweetButton.follow("TwitterDev"), "Default"),
             makeButtonContainer(TweetButton.follow("TwitterDev").hideScreenName(), "Hide screen name"),
             makeButtonContainer(TweetButton.follow("TwitterDev").large(), "Large"),

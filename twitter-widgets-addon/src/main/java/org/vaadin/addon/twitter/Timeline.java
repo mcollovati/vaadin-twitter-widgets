@@ -15,15 +15,19 @@
  */
 package org.vaadin.addon.twitter;
 
-import com.vaadin.annotations.JavaScript;
-
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.dependency.HtmlImport;
+import org.vaadin.addon.twitter.model.TwsTimelineModel;
 
 /**
  * Embed multiple Tweets in a compact, single-column view.
@@ -35,13 +39,14 @@ import java.util.Set;
  *
  * Documentation is taken from <a href="https://dev.twitter.com/web/overview">Twitter for Websites</a>.
  */
-@JavaScript("twitter_timeline.js")
-public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
+@Tag("tws-timeline")
+@HtmlImport("src/tws-timeline.html")
+public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
 
 
     private Timeline(Datasource datasource, String primaryArgument) {
-        getState().datasource = datasource;
-        getState().primaryArgument = Objects.requireNonNull(primaryArgument);
+        getModel().setDatasource(datasource);
+        getModel().setPrimaryArgument(Objects.requireNonNull(primaryArgument));
         if (primaryArgument.trim().isEmpty()) {
             throw new IllegalArgumentException("primary argument must no be empty or blank");
         }
@@ -156,7 +161,7 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
      * @return the datasource primary argument as string.
      */
     public String getDatasourcePrimaryArgument() {
-        return getState(false).primaryArgument;
+        return getModel().getPrimaryArgument();
     }
 
     /**
@@ -165,7 +170,7 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
      * @return the datasource type of this timeline
      */
     public Datasource getDatasource() {
-        return getState(false).datasource;
+        return getModel().getDatasource();
     }
 
     /**
@@ -175,7 +180,7 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
      * @return the object itself for further configuration
      */
     public Timeline withAriaPolite(AriaPolite ariaPolite) {
-        getState().ariaPolite = ariaPolite;
+        getModel().setAriaPolite(ariaPolite);
         return this;
     }
 
@@ -185,7 +190,7 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
      * @return the aria-polite behavior
      */
     public AriaPolite getAriaPolite() {
-        return getState(false).ariaPolite;
+        return getModel().getAriaPolite();
     }
 
     /**
@@ -195,7 +200,7 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
      * @return the object itself for further configuration
      */
     public Timeline withBorderColor(String borderColor) {
-        getState().borderColor = borderColor;
+        getModel().setBorderColor(borderColor);
         return this;
     }
 
@@ -205,7 +210,7 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
      * @return color value
      */
     public String getBorderColor() {
-        return getState(false).borderColor;
+        return getModel().getBorderColor();
     }
 
 
@@ -219,8 +224,8 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
         if (chrome.length == 0) {
             throw new IllegalArgumentException("At least one chrome component is required");
         }
-        getState().chrome.clear();
-        getState().chrome.addAll(Arrays.asList(chrome));
+        getModel().getChrome().clear();
+        getModel().getChrome().addAll(chromeToString(chrome));
         return this;
     }
 
@@ -232,9 +237,9 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
      */
     public Timeline withoutChrome(Chrome... chrome) {
         if (chrome.length == 0) {
-            getState().chrome.clear();
+            getModel().getChrome().clear();
         } else {
-            getState().chrome.removeAll(Arrays.asList(chrome));
+            getModel().getChrome().removeAll(chromeToString(chrome));
         }
         return this;
     }
@@ -249,7 +254,7 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
         if (chrome.length == 0) {
             throw new IllegalArgumentException("At least one chrome component is required");
         }
-        getState().chrome.addAll(Arrays.asList(chrome));
+        getModel().getChrome().addAll(chromeToString(chrome));
         return this;
     }
 
@@ -259,8 +264,16 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
      * @return a list of chrome components
      */
     public Set<Chrome> getChrome() {
-        return Collections.unmodifiableSet(getState(false).chrome);
+        return Collections.unmodifiableSet(
+            (Set<Chrome>)getModel().getChrome().stream().map(Chrome::valueOf)
+                .collect(Collectors.toCollection(LinkedHashSet::new))
+        );
     }
+
+
+
+
+
 
     /**
      * Sets the number of Tweets that must be displayed.
@@ -277,7 +290,7 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
         if (tweetLimit < 1 || tweetLimit > 20) {
             throw new IllegalArgumentException("Tweet limit must be between 1 and 20");
         }
-        getState().tweetLimit = tweetLimit;
+        getModel().setTweetLimit(tweetLimit);
         return this;
     }
 
@@ -287,9 +300,12 @@ public final class Timeline extends AbstractWidget<Timeline, TimelineState> {
      * @return the number of tweets that must be displayed
      */
     public int getTweetLimit() {
-        return getState(false).tweetLimit;
+        return getModel().getTweetLimit();
     }
 
+    private Set<String> chromeToString(Chrome[] chrome) {
+        return Stream.of(chrome).map(Chrome::name).collect(Collectors.toCollection(LinkedHashSet::new));
+    }
 
     /**
      * The data source definition describes what content will hydrate the embedded timeline.

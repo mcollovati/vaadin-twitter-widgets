@@ -1,9 +1,7 @@
 # Twitter widgets for Vaadin
 
-Twitter widgets for Vaadin is a Vaadin 7 addon that provides UI components 
+Twitter widgets for Vaadin is a Vaadin addon that provides UI components 
 to integrate an application with Twitter using [Twitter for Websites](https://dev.twitter.com/web/overview).
-
-This demo is powered by [Viritin](https://vaadin.com/directory#!addon/viritin).
 
 ## Single Tweet
 
@@ -20,7 +18,7 @@ for further information.
 ## Usage
 
 ```java
-String tweetId = "677563930122821632"; // boost my ego ;)
+String tweetId = "1015915654053093376"; 
 Tweet tweet = new Tweet(tweetId)
     .withoutCards()
     .withDarkTheme()

@@ -15,15 +15,15 @@
  */
 package org.vaadin.addon.twitter;
 
-import com.vaadin.annotations.JavaScript;
-import com.vaadin.shared.communication.SharedState;
-import com.vaadin.ui.AbstractJavaScriptComponent;
-
-import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Locale;
+import java.util.LinkedHashSet;
 import java.util.Set;
+
+import com.vaadin.flow.component.HasSize;
+import com.vaadin.flow.component.HasStyle;
+import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import org.vaadin.addon.twitter.model.BaseTwsModel;
 
 /**
  * Base twitter widget that manages common settings.
@@ -31,23 +31,11 @@ import java.util.Set;
  * @param <T> the type of the concrete widget
  * @param <S> the type of concrete widget state
  */
-@JavaScript("twitter_widgets.js")
-public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWidgetState> extends AbstractJavaScriptComponent {
 
-    private Class<? extends SharedState> stateType;
+public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTwsModel> extends PolymerTemplate<S>
+    implements HasSize, HasStyle {
 
     protected AbstractWidget() {
-        this.stateType = findType();
-    }
-
-    @Override
-    public void setLocale(Locale locale) {
-        super.setLocale(locale);
-        String lang = "en";
-        if (locale != null) {
-            lang = locale.getLanguage();
-        }
-        getState().lang = lang;
     }
 
     /**
@@ -59,7 +47,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return the object itself for further configuration
      */
     public T withDoNotTrack(boolean doNotTrack) {
-        getState().dnt = doNotTrack;
+        getModel().setDoNotTrack(doNotTrack);
         return self();
     }
 
@@ -90,7 +78,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @see #withDoNotTrack(boolean)
      */
     public boolean isDoNotTrack() {
-        return getState(false).dnt;
+        return getModel().isDoNotTrack();
     }
 
     /**
@@ -101,7 +89,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return the object itself for further configuration
      */
     public T withVia(String via) {
-        getState().via = via;
+        getModel().setVia(via);
         return self();
     }
 
@@ -111,7 +99,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return a valid Twitter screen name
      */
     public String getVia() {
-        return getState(false).via;
+        return getModel().getVia();
     }
 
     /**
@@ -121,7 +109,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return the object itself for further configuration
      */
     public T withRelated(String... related) {
-        getState().related.addAll(Arrays.asList(related));
+        getModel().getRelated().addAll(Arrays.asList(related));
         return self();
     }
 
@@ -131,7 +119,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return the object itself for further configuration
      */
     public T withoutRelated() {
-        getState().related.clear();
+        getModel().getRelated().clear();
         return self();
     }
 
@@ -142,7 +130,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return the object itself for further configuration
      */
     public T removeRelated(String... related) {
-        getState().related.removeAll(Arrays.asList(related));
+        getModel().getRelated().removeAll(Arrays.asList(related));
         return self();
     }
 
@@ -152,7 +140,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return list of Twitter screen names
      */
     public Set<String> getRelated() {
-        return Collections.unmodifiableSet(getState(false).related);
+        return Collections.unmodifiableSet(new LinkedHashSet<>(getModel().getRelated()));
     }
 
     /**
@@ -162,7 +150,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return the object itself for further configuration
      */
     public T withHashtag(String... hashtag) {
-        getState().hashtags.addAll(Arrays.asList(hashtag));
+        getModel().getHashtags().addAll(Arrays.asList(hashtag));
         return self();
     }
 
@@ -173,7 +161,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return the object itself for further configuration
      */
     public T removeHashtag(String... hashtag) {
-        getState().hashtags.removeAll(Arrays.asList(hashtag));
+        getModel().getHashtags().removeAll(Arrays.asList(hashtag));
         return self();
     }
 
@@ -183,7 +171,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return the object itself for further configuration
      */
     public T withoutHashtags() {
-        getState().hashtags.clear();
+        getModel().getHashtags().clear();
         return self();
     }
 
@@ -193,22 +181,11 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      * @return list of hashtags
      */
     public Set<String> getHastags() {
-        return Collections.unmodifiableSet(getState(false).hashtags);
+        return Collections.unmodifiableSet(new LinkedHashSet<>(getModel().getHashtags()));
     }
 
     // Fluent helpers
 
-    /**
-     * Sets the component's caption String.
-     *
-     * @param caption the new caption <code>String</code> for the component
-     * @return the object itself for further configuration
-     * @see com.vaadin.ui.AbstractComponent#setCaption(String)
-     */
-    public T withCaption(String caption) {
-        setCaption(caption);
-        return self();
-    }
 
     /**
      * Adds one or more style names to this component. Multiple styles can be
@@ -217,12 +194,9 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
      *
      * @param style the new style to be added to the component
      * @return the object itself for further configuration
-     * @see com.vaadin.ui.AbstractComponent#addStyleName(String)
      */
     public T withStyleName(String... style) {
-        for (String s : style) {
-            addStyleName(s);
-        }
+        getElement().getClassList().addAll(Arrays.asList(style));
         return self();
     }
 
@@ -232,25 +206,4 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseWid
         return (T) this;
     }
 
-    @Override
-    public Class<? extends SharedState> getStateType() {
-        return stateType;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    protected S getState() {
-        return (S) super.getState();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    protected S getState(boolean markAsDirty) {
-        return (S) super.getState(markAsDirty);
-    }
-
-    @SuppressWarnings("unchecked")
-    private Class<S> findType() {
-        return (Class<S>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-    }
 }

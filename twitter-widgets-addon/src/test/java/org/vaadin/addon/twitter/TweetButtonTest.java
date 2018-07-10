@@ -15,18 +15,19 @@
  */
 package org.vaadin.addon.twitter;
 
-import org.junit.Test;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.junit.Rule;
+import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-/**
- * Created by marco on 11/06/16.
- */
 public class TweetButtonTest {
+
+    @Rule
+    public VaadinServiceRule vaadinServiceRule = new VaadinServiceRule();
 
     @Test
     public void primaryArgumentIsMandatoryForButtons() {

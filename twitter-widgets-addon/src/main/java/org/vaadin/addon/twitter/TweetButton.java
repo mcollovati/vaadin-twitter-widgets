@@ -15,11 +15,15 @@
  */
 package org.vaadin.addon.twitter;
 
-import com.vaadin.annotations.JavaScript;
-
 import java.net.URI;
 import java.net.URL;
 import java.util.Objects;
+
+import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.dom.Element;
+import com.vaadin.flow.dom.ElementFactory;
+import org.vaadin.addon.twitter.model.TwsButtonModel;
 
 /**
  * The Tweet button is a small button displayed on your website to help viewers
@@ -43,13 +47,22 @@ import java.util.Objects;
  * {@link TweetButton#follow(String)}.
  *
  */
-@JavaScript("twitter_button.js")
-public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonState> {
+@Tag("tws-button")
+@HtmlImport("src/tws-button.html")
+public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonModel> {
 
 
     private TweetButton(String primaryArgument, Type buttonType) {
-        getState().primaryArgument = Objects.requireNonNull(primaryArgument);
-        getState().buttonType = Objects.requireNonNull(buttonType);
+        getModel().setupDefaults();
+        getModel().setPrimaryArgument(Objects.requireNonNull(primaryArgument));
+        getModel().setButtonType(Objects.requireNonNull(buttonType));
+
+        // Empty DIV will be used as container for twitter button
+        // Should use SLOT because button is not rendered in Chrome
+        // when using shadow DOM
+        Element buttonContainer = ElementFactory.createDiv();
+        //buttonContainer.setAttribute("slot", "twsContainer");
+        getElement().appendChild(buttonContainer);
     }
 
     /**
@@ -136,7 +149,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      * @return the primary argument for this button instance.
      */
     public String getPrimaryArgument() {
-        return getState(false).primaryArgument;
+        return getModel().getPrimaryArgument();
     }
 
     /**
@@ -145,7 +158,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      * @return the type of button.
      */
     public Type getType() {
-        return getState(false).buttonType;
+        return getModel().getButtonType();
     }
 
     /**
@@ -155,7 +168,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      * @return the object itself for further configuration
      */
     public TweetButton withText(String text) {
-        getState().text = text;
+        getModel().setText(text);
         return this;
     }
 
@@ -165,7 +178,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      * @return the text shown in Tweet Web Intent
      */
     public String getText() {
-        return getState(false).text;
+        return getModel().getText();
     }
 
     /**
@@ -178,7 +191,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      * @return the object itself for further configuration
      */
     public TweetButton withCount(Count count) {
-        getState().count = count;
+        getModel().setCount(count);
         return this;
     }
 
@@ -188,7 +201,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      * @return how count should be displayed
      */
     public Count getCount() {
-        return getState(false).count;
+        return getModel().getCount();
     }
 
     /**
@@ -200,7 +213,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      * @return the object itself for further configuration
      */
     public TweetButton withSize(Size size) {
-        getState().size = size;
+        getModel().setSize(size);
         return this;
     }
 
@@ -228,7 +241,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      * @return the button size;
      */
     public Size getSize() {
-        return getState(false).size;
+        return getModel().getSize();
     }
 
     /**
@@ -240,7 +253,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TweetButtonSt
      * @return the object itself for further configuration
      */
     public TweetButton withScreenName(boolean visible) {
-        getState().showScreenName = visible;
+        getModel().setShowScreenName(visible);
         return this;
     }
 

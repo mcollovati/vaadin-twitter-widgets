@@ -15,13 +15,24 @@
  */
 package org.vaadin.addon.twitter;
 
+import com.vaadin.flow.function.DeploymentConfiguration;
+import com.vaadin.flow.internal.HasCurrentService;
+import com.vaadin.flow.server.VaadinService;
 import org.assertj.core.api.ThrowableAssert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 public class TweetTest {
+
+    @Rule
+    public VaadinServiceRule vaadinServiceRule = new VaadinServiceRule();
 
     @Test
     public void tweetIdMustNotBeNull() {

@@ -15,20 +15,22 @@
  */
 package org.vaadin.addon.twitter;
 
-import org.junit.Test;
-
 import java.net.URL;
 import java.util.EnumSet;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+import org.junit.Rule;
+import org.junit.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-/**
- * Created by marco on 14/06/16.
- */
 public class TimelineTest {
+
+    @Rule
+    public VaadinServiceRule vaadinServiceRule = new VaadinServiceRule();
+
 
     @Test
     public void createProfileTimeline() {
@@ -91,9 +93,9 @@ public class TimelineTest {
     @Test
     public void urlTimelineCreationShouldFailWithInvalidArguments() {
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> Timeline.url((String)null));
+            .isThrownBy(() -> Timeline.url((String) null));
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> Timeline.url((URL)null));
+            .isThrownBy(() -> Timeline.url((URL) null));
         assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> Timeline.url(""))
             .withMessageContaining("Invalid url");
@@ -165,20 +167,20 @@ public class TimelineTest {
         assertThat(timeline.getTweetLimit()).isEqualTo(0);
 
 
-        IntStream.of(-1,0,21)
-            .forEach( limit -> assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> timeline.withTweetLimit(limit))
-            .withMessageContaining("must be between 1 and 20"));
+        IntStream.of(-1, 0, 21)
+            .forEach(limit -> assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> timeline.withTweetLimit(limit))
+                .withMessageContaining("must be between 1 and 20"));
         IntStream.rangeClosed(1, 20)
-            .forEach( limit -> assertThat(timeline.withTweetLimit(limit).getTweetLimit()).isEqualTo(limit));
+            .forEach(limit -> assertThat(timeline.withTweetLimit(limit).getTweetLimit()).isEqualTo(limit));
 
-        new Random().ints().filter( i -> i < 1 || i > 20).limit(100).
-        forEach( limit -> assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> timeline.withTweetLimit(limit))
-            .withMessageContaining("must be between 1 and 20"));
+        new Random().ints().filter(i -> i < 1 || i > 20).limit(100).
+            forEach(limit -> assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> timeline.withTweetLimit(limit))
+                .withMessageContaining("must be between 1 and 20"));
 
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> timeline.withTweetLimit((Integer)null));
+            .isThrownBy(() -> timeline.withTweetLimit((Integer) null));
 
     }
 

@@ -1,0 +1,53 @@
+<script>
+
+TwsCommonsMixin = (superClass) => class extends superClass {
+
+    constructor() {
+        super();
+        this._commonOptsNames = [
+            { key: "doNotTrack", remapKey: "dnt" },
+            { key: "language", remapKey: "lang" },
+            { key: "hashtags", map: this._arrayToStringList },
+            { key: "related", map: this._arrayToStringList },
+            "via"
+        ];
+    }
+
+    static get properties() {
+        return {
+            primaryArgument: String,
+            doNotTrack: Boolean,
+            language: String,
+            hashtags: Array,
+            related: Array,
+            via: String
+        }
+    }
+
+    _identityFn(a) { return a; }
+
+    _arrayToStringList (arr) { return (arr || []).join(","); }
+
+    _applyOptions(optsNames, opts) {
+        opts = opts || {};
+        optsNames.forEach(optObj => {
+            const key = optObj.key || optObj;
+            const remappedKey = optObj.remapKey || key;
+            const mapFn = optObj.map || this._identityFn;
+            if (this.hasOwnProperty(key) && (this[key] === false || this[key])) {
+                opts[remappedKey] = mapFn(this[key]);
+            }
+        });
+        return opts;
+    }
+
+    _createOptions() {
+        return this._mergeOptions(this._optsNames || {});
+    }
+
+    _mergeOptions(widgetOptions) {
+        return this._applyOptions(this._commonOptsNames.concat(widgetOptions || []));
+    }
+
+}
+</script>
