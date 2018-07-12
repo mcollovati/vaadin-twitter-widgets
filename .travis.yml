@@ -4,3 +4,6 @@ jdk:
 branches:
   only:
     - master
+    - vaadin-10
+    - vaadin-8
+    - vaadin7
