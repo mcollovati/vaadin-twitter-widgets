@@ -11,6 +11,11 @@ TwsCommonsMixin = (superClass) => class extends superClass {
             { key: "related", map: this._arrayToStringList },
             "via"
         ];
+        this.__createOptionsProperty();
+    }
+
+    static get optsNames() {
+        return [];
     }
 
     static get properties() {
@@ -36,6 +41,7 @@ TwsCommonsMixin = (superClass) => class extends superClass {
 
     __applyOptions(opts) {
         opts = opts || {};
+        console.log("=================== OPTS ", opts);
         const optsNames = this._commonOptsNames.concat(this._optsNames || []);
         optsNames.forEach(optObj => {
             const key = optObj.key || optObj;
@@ -67,18 +73,14 @@ TwsCommonsMixin = (superClass) => class extends superClass {
     // contains all properties whose value change should trigger
     // a rendering action
     __createOptionsProperty() {
-        const propNames = this._commonOptsNames.concat(this._optsNames || {}).map(o => o.key || o );
+        const propNames = this._commonOptsNames.concat(this.constructor.optsNames || {}).map(o => o.key || o );
         this['_computeOptionsProperty'] = Function.apply(this,
             propNames.concat([
             `return this.__buildOptions([${propNames.map(e => `'${e}'`).join(',')}], Array.from(arguments));`
         ]));
         const optionsComputedPropertyFn = `_computeOptionsProperty(${propNames.join(',')})`;
         this._createComputedProperty('options', optionsComputedPropertyFn, true);
-    }
 
-    ready() {
-        super.ready();
-        this.__createOptionsProperty();
     }
 
 }

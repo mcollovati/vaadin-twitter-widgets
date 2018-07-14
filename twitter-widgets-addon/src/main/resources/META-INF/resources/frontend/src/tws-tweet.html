@@ -12,11 +12,14 @@
 
             constructor() {
                 super();
-                this._optsNames = ["align", "conversation", "cards", "linkColor", "theme"];
             }
 
             static get is() {
                 return 'tws-tweet'
+            }
+
+            static get optsNames() {
+                return ["align", "conversation", "cards", "linkColor", "theme"];
             }
 
             static get properties() {

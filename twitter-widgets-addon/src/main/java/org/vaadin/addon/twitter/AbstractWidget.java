@@ -18,24 +18,57 @@ package org.vaadin.addon.twitter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
-import org.vaadin.addon.twitter.model.BaseTwsModel;
+import com.vaadin.flow.internal.JsonUtils;
+import com.vaadin.flow.templatemodel.TemplateModel;
+import elemental.json.Json;
+import elemental.json.JsonArray;
+import elemental.json.JsonType;
+import elemental.json.JsonValue;
+import elemental.json.impl.JsonUtil;
+
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Base twitter widget that manages common settings.
  *
  * @param <T> the type of the concrete widget
- * @param <S> the type of concrete widget state
  */
 
-public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTwsModel> extends PolymerTemplate<S>
+public abstract class AbstractWidget<T extends AbstractWidget> extends PolymerTemplate<TemplateModel>
     implements HasSize, HasStyle {
 
+    public static final String DEFAULT_LANGUAGE = "en";
+
     protected AbstractWidget() {
+        withLanguage(DEFAULT_LANGUAGE);
+        withDoNotTrack(false);
+        withoutHashtags();
+        withoutRelated();
+    }
+
+    protected final void setPrimaryArgument(String primaryArgument) {
+        getElement().setProperty("primaryArgument", primaryArgument);
+    }
+
+    protected final String internalGetPrimaryArgument() {
+        return getElement().getProperty("primaryArgument");
+    }
+
+    public T withLanguage(String language) {
+        getElement().setProperty("language", language);
+        return self();
+    }
+
+    public String getLanguage() {
+        return getElement().getProperty("language", DEFAULT_LANGUAGE);
     }
 
     /**
@@ -47,7 +80,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return the object itself for further configuration
      */
     public T withDoNotTrack(boolean doNotTrack) {
-        getModel().setDoNotTrack(doNotTrack);
+        getElement().setProperty("doNotTrack", doNotTrack);
         return self();
     }
 
@@ -78,7 +111,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @see #withDoNotTrack(boolean)
      */
     public boolean isDoNotTrack() {
-        return getModel().isDoNotTrack();
+        return getElement().getProperty("doNotTrack", false);
     }
 
     /**
@@ -89,7 +122,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return the object itself for further configuration
      */
     public T withVia(String via) {
-        getModel().setVia(via);
+        getElement().setProperty("via", via);
         return self();
     }
 
@@ -99,7 +132,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return a valid Twitter screen name
      */
     public String getVia() {
-        return getModel().getVia();
+        return getElement().getProperty("via");
     }
 
     /**
@@ -109,7 +142,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return the object itself for further configuration
      */
     public T withRelated(String... related) {
-        getModel().getRelated().addAll(Arrays.asList(related));
+        setStringList("related", Stream.of(related));
         return self();
     }
 
@@ -119,9 +152,10 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return the object itself for further configuration
      */
     public T withoutRelated() {
-        getModel().getRelated().clear();
+        clearStringList("related");
         return self();
     }
+
 
     /**
      * Removes Twitter screen names from the list to be suggested for following after a Tweet is posted.
@@ -130,7 +164,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return the object itself for further configuration
      */
     public T removeRelated(String... related) {
-        getModel().getRelated().removeAll(Arrays.asList(related));
+        removeFromStringList("hashtag", related);
         return self();
     }
 
@@ -140,7 +174,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return list of Twitter screen names
      */
     public Set<String> getRelated() {
-        return Collections.unmodifiableSet(new LinkedHashSet<>(getModel().getRelated()));
+        return Collections.unmodifiableSet(new LinkedHashSet<>(getStringList("related")));
     }
 
     /**
@@ -150,7 +184,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return the object itself for further configuration
      */
     public T withHashtag(String... hashtag) {
-        getModel().getHashtags().addAll(Arrays.asList(hashtag));
+        setStringList("hashtag", Stream.of(hashtag));
         return self();
     }
 
@@ -161,7 +195,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return the object itself for further configuration
      */
     public T removeHashtag(String... hashtag) {
-        getModel().getHashtags().removeAll(Arrays.asList(hashtag));
+        removeFromStringList("hashtag", hashtag);
         return self();
     }
 
@@ -171,7 +205,7 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return the object itself for further configuration
      */
     public T withoutHashtags() {
-        getModel().getHashtags().clear();
+        clearStringList("hashtags");
         return self();
     }
 
@@ -181,7 +215,9 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
      * @return list of hashtags
      */
     public Set<String> getHastags() {
-        return Collections.unmodifiableSet(new LinkedHashSet<>(getModel().getHashtags()));
+        return Collections.unmodifiableSet(new LinkedHashSet<>(
+            getStringList("hashtags")
+        ));
     }
 
     // Fluent helpers
@@ -204,6 +240,32 @@ public abstract class AbstractWidget<T extends AbstractWidget, S extends BaseTws
     @SuppressWarnings("unchecked")
     protected final T self() {
         return (T) this;
+    }
+
+
+    protected void setStringList(String propertyName, Stream<String> data) {
+        getElement().setPropertyJson(
+            propertyName, data.map(Json::create).collect(JsonUtils.asArray())
+        );
+    }
+
+    protected void clearStringList(String propertyName) {
+        setStringList(propertyName, Stream.empty());
+    }
+
+    protected void removeFromStringList(String propertyName, String... toRemove) {
+        Set<String> actual = new LinkedHashSet<>(getStringList(propertyName));
+        actual.removeAll(Arrays.asList(toRemove));
+        setStringList(propertyName, actual.stream());
+    }
+
+    protected List<String> getStringList(String propertyName) {
+        JsonValue related = JsonUtil.parse(getElement().getProperty(propertyName, "[]"));
+        if (JsonType.ARRAY.equals(related.getType())) {
+            return JsonUtils.stream((JsonArray) related).map(JsonValue::asString)
+                .collect(toList());
+        }
+        return emptyList();
     }
 
 }

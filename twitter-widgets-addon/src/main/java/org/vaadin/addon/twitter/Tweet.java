@@ -19,11 +19,10 @@ import java.util.Objects;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import org.vaadin.addon.twitter.model.TwsTweetModel;
 
 @Tag("tws-tweet")
 @HtmlImport("src/tws-tweet.html")
-public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
+public class Tweet extends AbstractWidget<Tweet> {
 
     /**
      * Creates a new component to embed a single Tweet.
@@ -31,8 +30,10 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @param tweetId The numerical ID of the desired Tweet
      */
     public Tweet(String tweetId) {
-        getModel().setupDefaults();
         setTweetId(tweetId);
+        withConversation(Tweet.Conversation.all);
+        withCards(Tweet.Cards.visible);
+        withTheme(Tweet.Theme.light);
     }
 
     /**
@@ -41,7 +42,7 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return the ID of the Tweet to embed
      */
     public String getTweetId() {
-        return getModel().getPrimaryArgument();
+        return internalGetPrimaryArgument();
     }
 
     private void setTweetId(String tweetId) {
@@ -54,7 +55,7 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
         } catch (NumberFormatException ex) {
             throw new IllegalArgumentException(tweetId + " is not a valid tweet ID");
         }
-        getModel().setPrimaryArgument(tweetId);
+        setPrimaryArgument(tweetId);
     }
 
     /**
@@ -64,7 +65,9 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return the object itself for further configuration
      */
     public Tweet withAlign(Alignment align) {
-        getModel().setAlign(Objects.requireNonNull(align, "align must not be null"));
+        getElement().setProperty(
+            "align", Objects.requireNonNull(align, "align must not be null").toString()
+        );
         return this;
     }
 
@@ -74,7 +77,7 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return the alignment of the Tweet relative to its container
      */
     public Alignment getAlign() {
-        return getModel().getAlign();
+        return Alignment.valueOf(getElement().getProperty("align"));
     }
 
     /**
@@ -88,7 +91,9 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return the object itself for further configuration
      */
     public Tweet withConversation(Conversation conversation) {
-        getModel().setConversation(Objects.requireNonNull(conversation, "conversation must not be null"));
+        getElement().setProperty(
+            "conversation", Objects.requireNonNull(conversation, "conversation must not be null").toString()
+        );
         return this;
     }
 
@@ -116,7 +121,7 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return the conversation setting
      */
     public Conversation getConversation() {
-        return getModel().getConversation();
+        return Conversation.valueOf(getElement().getProperty("conversation"));
     }
 
     /**
@@ -129,7 +134,9 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return the object itself for further configuration
      */
     public Tweet withCards(Cards cards) {
-        getModel().setCards(Objects.requireNonNull(cards, "cards must not be null"));
+        getElement().setProperty(
+            "cards", Objects.requireNonNull(cards, "cards must not be null").toString()
+        );
         return this;
     }
 
@@ -157,7 +164,7 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return cards visibility setting
      */
     public Cards getCards() {
-        return getModel().getCards();
+        return Cards.valueOf(getElement().getProperty("cards"));
     }
 
     /**
@@ -167,7 +174,7 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return the object itself for further configuration
      */
     public Tweet withLinkColor(String linkColor) {
-        getModel().setLinkColor(linkColor);
+        getElement().setProperty("linkColor", linkColor);
         return this;
     }
 
@@ -177,7 +184,7 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return the color to apply to the links
      */
     public String getLinkColor() {
-        return getModel().getLinkColor();
+        return getElement().getProperty("linkColor");
     }
 
     /**
@@ -189,7 +196,9 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return the object itself for further configuration
      */
     public Tweet withTheme(Theme theme) {
-        getModel().setTheme(Objects.requireNonNull(theme, "theme must not be null"));
+        getElement().setProperty(
+            "theme", Objects.requireNonNull(theme, "theme must not be null").toString()
+        );
         return this;
     }
 
@@ -217,7 +226,7 @@ public class Tweet extends AbstractWidget<Tweet, TwsTweetModel> {
      * @return applied colorscheme
      */
     public Theme getTheme() {
-        return getModel().getTheme();
+        return Theme.valueOf(getElement().getProperty("theme"));
     }
 
 

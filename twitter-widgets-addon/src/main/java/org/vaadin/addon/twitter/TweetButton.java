@@ -23,7 +23,6 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.dom.ElementFactory;
-import org.vaadin.addon.twitter.model.TwsButtonModel;
 
 /**
  * The Tweet button is a small button displayed on your website to help viewers
@@ -45,17 +44,19 @@ import org.vaadin.addon.twitter.model.TwsButtonModel;
  * {@link TweetButton#share(String)}, {@link TweetButton#share(URL)}
  * {@link TweetButton#hashtag(String)}, {@link TweetButton#mention(String)} and
  * {@link TweetButton#follow(String)}.
- *
  */
 @Tag("tws-button")
 @HtmlImport("src/tws-button.html")
-public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonModel> {
+public final class TweetButton extends AbstractWidget<TweetButton> {
 
 
     private TweetButton(String primaryArgument, Type buttonType) {
-        getModel().setupDefaults();
-        getModel().setPrimaryArgument(Objects.requireNonNull(primaryArgument));
-        getModel().setButtonType(Objects.requireNonNull(buttonType));
+
+        setPrimaryArgument(Objects.requireNonNull(primaryArgument));
+        getElement().setProperty("buttonType", Objects.requireNonNull(buttonType).toString());
+        withCount(TweetButton.Count.horizontal);
+        withSize(TweetButton.Size.medium);
+        showScreenName();
 
         // Empty DIV will be used as container for twitter button
         // Should use SLOT because button is not rendered in Chrome
@@ -149,7 +150,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
      * @return the primary argument for this button instance.
      */
     public String getPrimaryArgument() {
-        return getModel().getPrimaryArgument();
+        return internalGetPrimaryArgument();
     }
 
     /**
@@ -158,7 +159,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
      * @return the type of button.
      */
     public Type getType() {
-        return getModel().getButtonType();
+        return Type.valueOf(getElement().getProperty("buttonType"));
     }
 
     /**
@@ -168,7 +169,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
      * @return the object itself for further configuration
      */
     public TweetButton withText(String text) {
-        getModel().setText(text);
+        getElement().setProperty("text", text);
         return this;
     }
 
@@ -178,7 +179,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
      * @return the text shown in Tweet Web Intent
      */
     public String getText() {
-        return getModel().getText();
+        return getElement().getProperty("text");
     }
 
     /**
@@ -191,7 +192,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
      * @return the object itself for further configuration
      */
     public TweetButton withCount(Count count) {
-        getModel().setCount(count);
+        getElement().setProperty("count", count.toString());
         return this;
     }
 
@@ -201,7 +202,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
      * @return how count should be displayed
      */
     public Count getCount() {
-        return getModel().getCount();
+        return Count.valueOf(getElement().getProperty("count"));
     }
 
     /**
@@ -213,7 +214,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
      * @return the object itself for further configuration
      */
     public TweetButton withSize(Size size) {
-        getModel().setSize(size);
+        getElement().setProperty("size", size.toString());
         return this;
     }
 
@@ -241,7 +242,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
      * @return the button size;
      */
     public Size getSize() {
-        return getModel().getSize();
+        return Size.valueOf(getElement().getProperty("size"));
     }
 
     /**
@@ -253,7 +254,7 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
      * @return the object itself for further configuration
      */
     public TweetButton withScreenName(boolean visible) {
-        getModel().setShowScreenName(visible);
+        getElement().setProperty("screenName", visible);
         return this;
     }
 
@@ -275,6 +276,9 @@ public final class TweetButton extends AbstractWidget<TweetButton, TwsButtonMode
         return withScreenName(true);
     }
 
+    public boolean isScreenNameVisible() {
+        return getElement().getProperty("screenName", true);
+    }
 
     /**
      * Button type.

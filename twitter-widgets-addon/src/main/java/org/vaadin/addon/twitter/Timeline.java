@@ -20,6 +20,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,7 +28,6 @@ import java.util.stream.Stream;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import org.vaadin.addon.twitter.model.TwsTimelineModel;
 
 /**
  * Embed multiple Tweets in a compact, single-column view.
@@ -41,12 +41,12 @@ import org.vaadin.addon.twitter.model.TwsTimelineModel;
  */
 @Tag("tws-timeline")
 @HtmlImport("src/tws-timeline.html")
-public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
+public final class Timeline extends AbstractWidget<Timeline> {
 
 
     private Timeline(Datasource datasource, String primaryArgument) {
-        getModel().setDatasource(datasource);
-        getModel().setPrimaryArgument(Objects.requireNonNull(primaryArgument));
+        getElement().setProperty("datasource", datasource.toString());
+        setPrimaryArgument(Objects.requireNonNull(primaryArgument));
         if (primaryArgument.trim().isEmpty()) {
             throw new IllegalArgumentException("primary argument must no be empty or blank");
         }
@@ -161,7 +161,7 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
      * @return the datasource primary argument as string.
      */
     public String getDatasourcePrimaryArgument() {
-        return getModel().getPrimaryArgument();
+        return internalGetPrimaryArgument();
     }
 
     /**
@@ -170,7 +170,7 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
      * @return the datasource type of this timeline
      */
     public Datasource getDatasource() {
-        return getModel().getDatasource();
+        return Datasource.valueOf(getElement().getProperty("datasource"));
     }
 
     /**
@@ -180,7 +180,7 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
      * @return the object itself for further configuration
      */
     public Timeline withAriaPolite(AriaPolite ariaPolite) {
-        getModel().setAriaPolite(ariaPolite);
+        getElement().setProperty("ariaPolite", ariaPolite.toString());
         return this;
     }
 
@@ -190,7 +190,7 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
      * @return the aria-polite behavior
      */
     public AriaPolite getAriaPolite() {
-        return getModel().getAriaPolite();
+        return AriaPolite.valueOf(getElement().getProperty("ariaPolite"));
     }
 
     /**
@@ -200,7 +200,7 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
      * @return the object itself for further configuration
      */
     public Timeline withBorderColor(String borderColor) {
-        getModel().setBorderColor(borderColor);
+        getElement().getProperty("borderColor", borderColor);
         return this;
     }
 
@@ -210,7 +210,7 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
      * @return color value
      */
     public String getBorderColor() {
-        return getModel().getBorderColor();
+        return getElement().getProperty("borderColor");
     }
 
 
@@ -224,8 +224,7 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
         if (chrome.length == 0) {
             throw new IllegalArgumentException("At least one chrome component is required");
         }
-        getModel().getChrome().clear();
-        getModel().getChrome().addAll(chromeToString(chrome));
+        setStringList("chrome", chromeToString(chrome).stream());
         return this;
     }
 
@@ -237,9 +236,9 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
      */
     public Timeline withoutChrome(Chrome... chrome) {
         if (chrome.length == 0) {
-            getModel().getChrome().clear();
+            clearStringList("chrome");
         } else {
-            getModel().getChrome().removeAll(chromeToString(chrome));
+            removeFromStringList("chrome", chromeToString(chrome).toArray(new String[chrome.length]));
         }
         return this;
     }
@@ -254,7 +253,9 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
         if (chrome.length == 0) {
             throw new IllegalArgumentException("At least one chrome component is required");
         }
-        getModel().getChrome().addAll(chromeToString(chrome));
+        List<String> actual = getStringList("chrome");
+        actual.addAll(chromeToString(chrome));
+        setStringList("chrome", actual.stream());
         return this;
     }
 
@@ -264,15 +265,11 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
      * @return a list of chrome components
      */
     public Set<Chrome> getChrome() {
-        return Collections.unmodifiableSet(
-            (Set<Chrome>)getModel().getChrome().stream().map(Chrome::valueOf)
-                .collect(Collectors.toCollection(LinkedHashSet::new))
-        );
+        LinkedHashSet<Chrome> actual = getStringList("chrome")
+            .stream().map(Chrome::valueOf)
+            .collect(Collectors.toCollection(LinkedHashSet::new));
+        return Collections.unmodifiableSet(actual);
     }
-
-
-
-
 
 
     /**
@@ -290,7 +287,7 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
         if (tweetLimit < 1 || tweetLimit > 20) {
             throw new IllegalArgumentException("Tweet limit must be between 1 and 20");
         }
-        getModel().setTweetLimit(tweetLimit);
+        getElement().setProperty("tweetLimit", tweetLimit);
         return this;
     }
 
@@ -300,7 +297,7 @@ public final class Timeline extends AbstractWidget<Timeline, TwsTimelineModel> {
      * @return the number of tweets that must be displayed
      */
     public int getTweetLimit() {
-        return getModel().getTweetLimit();
+        return getElement().getProperty("tweetLimit", 0);
     }
 
     private Set<String> chromeToString(Chrome[] chrome) {

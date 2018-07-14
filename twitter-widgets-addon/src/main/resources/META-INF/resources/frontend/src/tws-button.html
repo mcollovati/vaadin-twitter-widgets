@@ -18,14 +18,17 @@
 
             constructor() {
                 super();
-                this._optsNames = [
-                    "align", "count", "size", "text",
-                    { key: "showScreenName", map: function(val) { return (val === false) ? false : true; }}
-                ];
             }
 
             static get is() {
                 return 'tws-button'
+            }
+
+            static get optsNames() {
+                return [
+                    "align", "count", "size", "text",
+                    { key: "showScreenName", map: function(val) { return (val === false) ? false : true; }}
+                ];
             }
 
             static get properties() {
