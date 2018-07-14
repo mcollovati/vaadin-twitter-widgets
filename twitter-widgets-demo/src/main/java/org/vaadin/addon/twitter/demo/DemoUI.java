@@ -49,16 +49,18 @@ public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnte
 
     private final List<Markdown> markdown = Arrays.asList(
         readMarkdown("timeline.md"), readMarkdown("single_tweet.md"), readMarkdown("follow_button.md"),
-        readMarkdown("share_button.md"), readMarkdown("hashtag_button.md"), readMarkdown("mention_button.md")
+        readMarkdown("share_button.md"), readMarkdown("hashtag_button.md"), readMarkdown("mention_button.md"),
+        readMarkdown("dynamic_opts.md")
     );
     private final Div demoArea;
     private final Tabs tabs;
+    private final Div info;
 
     public DemoUI() {
         setSizeFull();
         addClassName("root-container");
 
-        Div info = new Div(markdown.get(0));
+        info = new Div(markdown.get(0));
         info.addClassName("tw-docs");
 
         demoArea = new Div();
@@ -74,11 +76,11 @@ public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnte
         tabs.add(new PageTab<>("Share Button", ButtonDemo.class, TweetButton.Type.Share.name()));
         tabs.add(new PageTab<>("Hashtag Button", ButtonDemo.class, TweetButton.Type.Hashtag.name()));
         tabs.add(new PageTab<>("Mention Button", ButtonDemo.class, TweetButton.Type.Mention.name()));
+        tabs.add(new PageTab<>("Change Tweet Options", DynamicDemo.class));
         tabs.addSelectedChangeListener(event -> {
             PageTab pageTab = (PageTab) tabs.getSelectedTab();
             getUI().ifPresent(pageTab::navigate);
-            info.removeAll();
-            info.add(markdown.get(tabs.getSelectedIndex()));
+            updateInfoPanel();
         });
         tabs.setSelectedIndex(0);
 
@@ -91,6 +93,11 @@ public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnte
 
         setFlexGrow(4, info);
         setFlexGrow(6, demoView);
+    }
+
+    private void updateInfoPanel() {
+        info.removeAll();
+        info.add(markdown.get(tabs.getSelectedIndex()));
     }
 
     @Override
@@ -107,7 +114,10 @@ public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnte
             .map(PageTab.class::cast)
             .filter(p -> p.isSelected(event))
             .findFirst()
-            .ifPresent(tabs::setSelectedTab);
+            .ifPresent( t -> {
+                tabs.setSelectedTab(t);
+                updateInfoPanel();
+            });
     }
 
     @SuppressWarnings("unchecked")

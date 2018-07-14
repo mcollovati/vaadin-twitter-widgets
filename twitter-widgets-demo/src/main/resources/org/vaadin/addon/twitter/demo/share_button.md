@@ -3,14 +3,14 @@
 Twitter widgets for Vaadin is a Vaadin addon that provides UI components 
 to integrate an application with Twitter using [Twitter for Websites](https://dev.twitter.com/web/overview).
 
-## Tweet button
+## Share button
 
-The [Tweet button](https://dev.twitter.com/web/tweet-button) is a small button displayed on your website 
+The [share button](https://dev.twitter.com/web/tweet-button) is a small button displayed on your website 
 to help viewers easily share your content on Twitter.
 
 ## Configuration
 
-A Tweet button may be customized from its default settings with fluent accessors.
+A share button may be customized from its default settings with fluent accessors.
 
 See [javadocs](https://vaadindemo-mbf.rhcloud.com/docs/twitter-widgets/api/org/vaadin/addon/twitter/TweetButton.html) 
 for further information.

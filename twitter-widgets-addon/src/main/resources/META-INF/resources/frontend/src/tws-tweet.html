@@ -28,16 +28,11 @@
                 }
             }
 
-            _render() {
+            _render(opts) {
+                this.$.twsContainer.querySelectorAll('*').forEach(el => el.remove());
                 window.twttr.widgets.createTweet(
-                    this.primaryArgument, this.$.twsContainer, this._createOptions()
+                    this.primaryArgument, this.$.twsContainer, opts
                 ).then(el => console.log("Tweet loaded", el));
-                console.log("================== CONFIG", this._createOptions());
-            }
-
-            ready() {
-                super.ready();
-                window.twttr.ready(() => this._render());
             }
 
         }

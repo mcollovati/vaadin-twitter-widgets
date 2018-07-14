@@ -61,9 +61,9 @@
                 return el;
             };
 
-            _render() {
+            _render(opts) {
                 const generatorFn = "create" + this.buttonType + "Button";
-                window.twttr.widgets[generatorFn](this.primaryArgument, this.firstElementChild, this._createOptions())
+                window.twttr.widgets[generatorFn](this.primaryArgument, this.firstElementChild, opts)
                 .then(el => {
                     Polymer.dom(this.root).removeChild(this.__previewElement)
                     delete this.__previewElement;
@@ -75,7 +75,7 @@
                 super.ready();
                 this.__previewElement = this._createPreviewElement();
                 Polymer.dom(this.root).appendChild(this.__previewElement)
-                window.twttr.ready(() => this._render());
+                //window.twttr.ready(() => this._render());
             }
 
         }

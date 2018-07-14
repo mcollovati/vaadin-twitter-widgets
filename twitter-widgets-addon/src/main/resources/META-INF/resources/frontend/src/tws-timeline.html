@@ -66,18 +66,12 @@
                 }
             }
 
-            _createOptions() {
-                const opts = super._createOptions();
+            _render(opts) {
                 if (this.$.twsContainer.clientHeight > 0) {
                     opts.height = this.$.twsContainer.clientHeight;
                 };
-                return opts;
-            }
-
-            _render() {
-                 const opts = this._createOptions();
                  window.twttr.widgets.createTimeline(
-                    createDataSource(this), this.$.twsContainer, this._createOptions())
+                    createDataSource(this), this.$.twsContainer, opts)
                 .then(function (el) {
                     console.log("Timeline loaded", el);
                 });
