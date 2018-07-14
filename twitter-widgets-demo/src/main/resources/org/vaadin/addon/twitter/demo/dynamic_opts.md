@@ -11,8 +11,14 @@ Widgets support runtime changes of its attributes with the exclusions of the `pr
 ## Usage
 
 ```java
-TweetButton.follow("TwitterDev");
-TweetButton.follow("TwitterDev").hideScreenName();
-TweetButton.follow("TwitterDev").large();
-TweetButton.follow("TwitterDev").withCount(TweetButton.Count.none);
+Tweet tweet = new Tweet("763309653497446401");
+
+ComboBox<Tweet.Theme> theme = new ComboBox<>();
+theme.setItems(Tweet.Theme.values());
+theme.setValue(tweet.getTheme());
+theme.addValueChangeListener(event -> 
+    Optional.ofNullable(event.getValue) 
+        .ifPresent(Tweet::withTheme)
+);
+
 ```
