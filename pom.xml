@@ -5,7 +5,7 @@
     <groupId>org.vaadin.addon</groupId>
     <artifactId>twitter-widgets-root</artifactId>
     <packaging>pom</packaging>
-    <version>0.4-SNAPSHOT</version>
+    <version>1.0</version>
     <name>Twitter widgets Add-on Root Project</name>
 
     <prerequisites>
@@ -20,7 +20,7 @@
         <name>Marco Collovati</name>
         <url>https://github.com/mcollovati</url>
     </organization>
-    <inceptionYear>2016-2017</inceptionYear>
+    <inceptionYear>2016-2018</inceptionYear>
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/mcollovati/vaadin-twitter-widgets/issues</url>
