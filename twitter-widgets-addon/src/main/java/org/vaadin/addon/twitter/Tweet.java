@@ -31,6 +31,7 @@ public class Tweet extends AbstractWidget<Tweet> {
      */
     public Tweet(String tweetId) {
         setTweetId(tweetId);
+        withAlign(Alignment.center);
         withConversation(Tweet.Conversation.all);
         withCards(Tweet.Cards.visible);
         withTheme(Tweet.Theme.light);
