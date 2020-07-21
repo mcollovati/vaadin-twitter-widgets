@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.Objects;
 
 import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.dom.ElementFactory;
 
@@ -46,7 +46,7 @@ import com.vaadin.flow.dom.ElementFactory;
  * {@link TweetButton#follow(String)}.
  */
 @Tag("tws-button")
-@HtmlImport("src/tws-button.html")
+@JsModule("./src/tws-button.js")
 public final class TweetButton extends AbstractWidget<TweetButton> {
 
 

@@ -1,3 +1,7 @@
+import '@polymer/polymer/lib/elements/custom-style.js';
+const documentContainer = document.createElement('template');
+
+documentContainer.innerHTML = `
 <custom-style>
     <!-- This is where your App's styling should go. You can use .css files too. -->
     <style>
@@ -49,9 +53,15 @@
         overflow-y: scroll;
     }
 
+    .tw-single-tweet {
+        min-height: 250px;
+    }
+
     .v-label-undef-w {
         white-space: pre-wrap;
     }
 
     </style>
-</custom-style>
+</custom-style>`;
+
+document.head.appendChild(documentContainer.content);

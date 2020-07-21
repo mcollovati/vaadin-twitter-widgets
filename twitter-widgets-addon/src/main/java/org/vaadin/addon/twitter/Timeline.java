@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
 
 /**
  * Embed multiple Tweets in a compact, single-column view.
@@ -40,7 +40,7 @@ import com.vaadin.flow.component.dependency.HtmlImport;
  * Documentation is taken from <a href="https://dev.twitter.com/web/overview">Twitter for Websites</a>.
  */
 @Tag("tws-timeline")
-@HtmlImport("src/tws-timeline.html")
+@JsModule("./src/tws-timeline.js")
 public final class Timeline extends AbstractWidget<Timeline> {
 
 

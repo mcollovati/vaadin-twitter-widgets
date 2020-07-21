@@ -36,17 +36,18 @@ public class DynamicDemo extends Composite<HorizontalLayout> {
     private Tweet tweet;
 
     public DynamicDemo() {
+        getContent().setSizeFull();
         tweet = new Tweet("763309653497446401");
         tweet.addClassNames("tw-widget", "tw-single-tweet");
+        tweet.setSizeFull();
         FormLayout optionsForm = new FormLayout();
+        optionsForm.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1));
         optionsForm.setSizeUndefined();
 
         buildOptions(optionsForm);
         getContent().add(optionsForm);
         getContent().setAlignSelf(FlexComponent.Alignment.CENTER, tweet);
-        getContent().add(tweet);
-        getContent().setFlexGrow(0, optionsForm);
-        getContent().setFlexGrow(1, tweet);
+        getContent().addAndExpand(tweet);
     }
 
     private void buildOptions(FormLayout optionsForm) {

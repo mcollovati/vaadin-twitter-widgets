@@ -18,10 +18,10 @@ package org.vaadin.addon.twitter;
 import java.util.Objects;
 
 import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
 
 @Tag("tws-tweet")
-@HtmlImport("src/tws-tweet.html")
+@JsModule("./src/tws-tweet.js")
 public class Tweet extends AbstractWidget<Tweet> {
 
     /**

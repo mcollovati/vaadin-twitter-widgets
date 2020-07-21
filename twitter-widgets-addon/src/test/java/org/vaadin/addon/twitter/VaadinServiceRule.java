@@ -15,17 +15,19 @@
  */
 package org.vaadin.addon.twitter;
 
-import com.vaadin.flow.function.DeploymentConfiguration;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.vaadin.flow.server.DependencyFilter;
+import com.vaadin.flow.server.MockVaadinServletService;
+import com.vaadin.flow.server.ServiceException;
 import com.vaadin.flow.server.VaadinService;
+import com.vaadin.flow.shared.ui.Dependency;
+import com.vaadin.tests.util.MockDeploymentConfiguration;
 import org.junit.Assert;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 public class VaadinServiceRule implements TestRule {
 
@@ -51,30 +53,57 @@ public class VaadinServiceRule implements TestRule {
         return service;
     }
 
-    public void setUpCurrentService() {
+    public void setUpCurrentService() throws ServiceException {
         Assert.assertNull(VaadinService.getCurrent());
         this.service = this.createService();
         VaadinService.setCurrent(this.service);
     }
 
     public void clearCurrentService() {
-        VaadinService.setCurrent((VaadinService)null);
+        VaadinService.setCurrent((VaadinService) null);
         this.service = null;
     }
 
 
-    protected VaadinService createService() {
-        DeploymentConfiguration configuration = Mockito.mock(DeploymentConfiguration.class);
-        when(configuration.isProductionMode()).thenReturn(false);
+    protected VaadinService createService() throws ServiceException {
+        //DeploymentConfiguration configuration = Mockito.mock(DeploymentConfiguration.class);
+        //when(configuration.isProductionMode()).thenReturn(false);
+        MockDeploymentConfiguration configuration = new MockDeploymentConfiguration();
+        configuration.setProductionMode(true);
+        configuration.setEnableDevServer(false);
 
-        VaadinService service = Mockito.mock(VaadinService.class);
-        when(service.getDeploymentConfiguration())
-            .thenReturn(configuration);
 
+        VaadinService service = new MockVaadinServletService(configuration) {
+            @Override
+            public Iterable<DependencyFilter> getDependencyFilters() {
+                ArrayList<DependencyFilter> f = new ArrayList<>();
+                super.getDependencyFilters().forEach(f::add);
+                f.add((dependencies, filterContext) -> {
+                    List<Dependency> copy = new ArrayList<>(dependencies);
+                    copy.replaceAll(d -> {
+                        if (d.getUrl().startsWith("./")) {
+                            return new Dependency(d.getType(), d.getUrl().replaceFirst("^\\./", "META-INF/resources/frontend/"), d.getLoadMode());
+                        } else {
+                            return d;
+                        }
+                    });
+                    return copy;
+                });
+                return f;
+            }
+        };
+        service.init();
+
+
+        //VaadinService service = Mockito.mock(VaadinService.class);
+        //when(service.getDeploymentConfiguration())
+        //    .thenReturn(configuration);
+
+        /*
         when(service.getResourceAsStream(ArgumentMatchers.startsWith("frontend://src/"), any(), any()))
             .then(i -> Tweet.class.getResourceAsStream(
                 String.format("/META-INF/resources/%s", i.<String>getArgument(0).replace(":/", "")))
-            );
+            );*/
         return service;
     }
 

@@ -1,6 +1,7 @@
-<script>
+import { idlePeriod } from '@polymer/polymer/lib/utils/async.js';
+import {Debouncer} from '@polymer/polymer/lib/utils/debounce.js';
 
-TwsCommonsMixin = (superClass) => class extends superClass {
+export const TwsCommonsMixin = (superClass) => class extends superClass {
 
     constructor() {
         super();
@@ -41,7 +42,6 @@ TwsCommonsMixin = (superClass) => class extends superClass {
 
     __applyOptions(opts) {
         opts = opts || {};
-        console.log("=================== OPTS ", opts);
         const optsNames = this._commonOptsNames.concat(this._optsNames || []);
         optsNames.forEach(optObj => {
             const key = optObj.key || optObj;
@@ -56,9 +56,9 @@ TwsCommonsMixin = (superClass) => class extends superClass {
 
     // Render the widget whenever an option has changed
     optionsChanged(opts) {
-        this._debouncer = Polymer.Debouncer.debounce(
+        this._debouncer = Debouncer.debounce(
             this._debouncer, // initially undefined
-            Polymer.Async.idlePeriod,
+            idlePeriod,
             () => window.twttr.ready(() => this._render(this.__applyOptions(opts)))
         );
     }
@@ -84,4 +84,4 @@ TwsCommonsMixin = (superClass) => class extends superClass {
     }
 
 }
-</script>
+

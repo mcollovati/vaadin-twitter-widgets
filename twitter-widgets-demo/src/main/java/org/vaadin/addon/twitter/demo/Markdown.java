@@ -17,10 +17,18 @@ package org.vaadin.addon.twitter.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.dependency.NpmPackage;
 
 @Tag("markdown-element")
-@HtmlImport("src/markdown-template.html")
+@NpmPackage.Container(value = {
+    @NpmPackage(value = "@polymer/marked-element", version = "3.0.1"),
+    @NpmPackage(value = "highlight.js", version = "10.1.1")
+})
+@CssImport(value = "highlight.js/styles/github.css", themeFor = "markdown-element")
+@JsModule("./markdown-template.js")
 public class Markdown extends Component {
 
     public Markdown() {

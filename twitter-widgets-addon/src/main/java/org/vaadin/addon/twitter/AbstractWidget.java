@@ -48,6 +48,7 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends PolymerTe
     public static final String DEFAULT_LANGUAGE = "en";
 
     protected AbstractWidget() {
+        super();
         withLanguage(DEFAULT_LANGUAGE);
         withDoNotTrack(false);
         withoutHashtags();
