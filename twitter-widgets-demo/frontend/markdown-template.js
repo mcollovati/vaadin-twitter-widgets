@@ -2,7 +2,7 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { html, htmlLiteral } from '@polymer/polymer/lib/utils/html-tag.js';
 import "@polymer/marked-element";
 import hljs from 'highlight.js';
-import hljcss from 'highlight.js/styles/github<.css';
+import hljcss from 'highlight.js/styles/github.css';
 const mycss = htmlLiteral(hljcss);
 
 
