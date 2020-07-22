@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/mcollovati/vaadin-twitter-widgets.svg?branch=master)](https://travis-ci.org/mcollovati/vaadin-twitter-widgets)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bcee2464d2514d719335d229e4c72aed)](https://www.codacy.com/app/mcollovati/vaadin-twitter-widgets?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mcollovati/vaadin-twitter-widgets&amp;utm_campaign=Badge_Grade)
 
-Twitter widgets for Vaadin is a Vaadin 7 addon that provides UI components 
+Twitter widgets for Vaadin is a Vaadin addon that provides UI components 
 for integrate an application with Twitter using [Twitter for Websites](https://dev.twitter.com/web/overview).
  
 Following widgets are implemented
