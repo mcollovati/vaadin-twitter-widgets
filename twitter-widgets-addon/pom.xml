@@ -122,6 +122,9 @@
                             <Vaadin-License-Title>${Vaadin-License-Title}</Vaadin-License-Title>
                         </manifestEntries>
                     </archive>
+                    <excludes>
+                        <exclude>META-INF/VAADIN/config/flow-build-info.json</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
 
