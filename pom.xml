@@ -4,7 +4,7 @@
     <groupId>org.vaadin.addon</groupId>
     <artifactId>twitter-widgets-root</artifactId>
     <packaging>pom</packaging>
-    <version>2.1</version>
+    <version>3.0-SNAPSHOT</version>
     <name>Twitter widgets Add-on Root Project</name>
 
     <prerequisites>
@@ -28,7 +28,7 @@
         <url>https://github.com/mcollovati/vaadin-twitter.git</url>
         <connection>scm:git:git@github.com:mcollovati/vaadin-twitter-widgets.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:/mcollovati/vaadin-twitter-widgets.git</developerConnection>
-        <tag>v2.1</tag>
+        <tag>HEAD</tag>
     </scm>
     <developers>
         <developer>
