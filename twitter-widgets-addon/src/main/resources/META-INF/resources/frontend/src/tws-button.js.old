@@ -56,9 +56,27 @@ class TwsButton extends TwsCommonsMixin(LitElement) {
     return html`<a href="${href}">${previewTextMapper[buttonType]}</a>`;
   }
 
-    render() {
-        return html``;
-    }
+  _createPreviewElement() {
+
+      const previewTextMapper = {
+          follow: function(state) { return "Follow @" + state.primaryArgument; },
+          share: function(state) { return "Tweet"; },
+          mention: function(state) { return "Tweet @" + state.primaryArgument; },
+          hashtag: function(state) { return "Tweet #" + state.primaryArgument; },
+      };
+
+      const buttonType = this.buttonType.toLowerCase();
+      const el = document.createElement("A");
+      el.className = 'twitter-' + buttonType + '-button';
+      if (buttonType === "follow") {
+          el.href = "https://twitter.com/" + this.primaryArgument;
+      } else {
+          el.href = "https://twitter.com/intent/tweet";
+      }
+      el.innerText = previewTextMapper[buttonType](this);
+      return el;
+  }
+
   _render(opts) {
       const generatorFn = "create" + this.buttonType + "Button";
       window.twttr.widgets[generatorFn](this.primaryArgument, this.firstElementChild, opts)

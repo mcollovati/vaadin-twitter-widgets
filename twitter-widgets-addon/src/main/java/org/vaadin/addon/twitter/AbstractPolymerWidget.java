@@ -24,11 +24,9 @@ import java.util.stream.Stream;
 
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasStyle;
-import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.internal.JsonUtils;
 import com.vaadin.flow.templatemodel.TemplateModel;
-
 import elemental.json.Json;
 import elemental.json.JsonArray;
 import elemental.json.JsonType;
@@ -44,12 +42,12 @@ import static java.util.stream.Collectors.toList;
  * @param <T> the type of the concrete widget
  */
 
-public abstract class AbstractWidget<T extends AbstractWidget> extends LitTemplate
-        implements HasSize, HasStyle {
+public abstract class AbstractPolymerWidget<T extends AbstractPolymerWidget> extends PolymerTemplate<TemplateModel>
+    implements HasSize, HasStyle {
 
     public static final String DEFAULT_LANGUAGE = "en";
 
-    protected AbstractWidget() {
+    protected AbstractPolymerWidget() {
         super();
         withLanguage(DEFAULT_LANGUAGE);
         withDoNotTrack(false);
@@ -219,7 +217,7 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends LitTempla
      */
     public Set<String> getHastags() {
         return Collections.unmodifiableSet(new LinkedHashSet<>(
-                getStringList("hashtags")
+            getStringList("hashtags")
         ));
     }
 
@@ -248,7 +246,7 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends LitTempla
 
     protected void setStringList(String propertyName, Stream<String> data) {
         getElement().setPropertyJson(
-                propertyName, data.map(Json::create).collect(JsonUtils.asArray())
+            propertyName, data.map(Json::create).collect(JsonUtils.asArray())
         );
     }
 
@@ -266,7 +264,7 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends LitTempla
         JsonValue related = JsonUtil.parse(getElement().getProperty(propertyName, "[]"));
         if (JsonType.ARRAY.equals(related.getType())) {
             return JsonUtils.stream((JsonArray) related).map(JsonValue::asString)
-                    .collect(toList());
+                .collect(toList());
         }
         return emptyList();
     }

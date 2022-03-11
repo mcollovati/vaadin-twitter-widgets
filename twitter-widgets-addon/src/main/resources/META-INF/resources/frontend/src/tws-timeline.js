@@ -1,6 +1,6 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import './tws-loader.js';
-import {TwsCommonsMixin} from './tws-common.js';
+import {TwsCommonsMixin} from './tws-common.polymer.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 const datasourceGenerators = {
     profile: function(ds, state) {

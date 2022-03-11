@@ -41,7 +41,7 @@ import com.vaadin.flow.component.dependency.JsModule;
  */
 @Tag("tws-timeline")
 @JsModule("./src/tws-timeline.js")
-public final class Timeline extends AbstractWidget<Timeline> {
+public final class Timeline extends AbstractPolymerWidget<Timeline> {
 
 
     private Timeline(Datasource datasource, String primaryArgument) {

@@ -22,7 +22,7 @@ import com.vaadin.flow.component.dependency.JsModule;
 
 @Tag("tws-tweet")
 @JsModule("./src/tws-tweet.js")
-public class Tweet extends AbstractWidget<Tweet> {
+public class Tweet extends AbstractPolymerWidget<Tweet> {
 
     /**
      * Creates a new component to embed a single Tweet.

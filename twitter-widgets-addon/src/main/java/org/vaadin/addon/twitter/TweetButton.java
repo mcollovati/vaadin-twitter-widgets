@@ -47,7 +47,7 @@ import com.vaadin.flow.dom.ElementFactory;
  */
 @Tag("tws-button")
 @JsModule("./src/tws-button.js")
-public final class TweetButton extends AbstractWidget<TweetButton> {
+public final class TweetButton extends AbstractPolymerWidget<TweetButton> {
 
 
     private TweetButton(String primaryArgument, Type buttonType) {
