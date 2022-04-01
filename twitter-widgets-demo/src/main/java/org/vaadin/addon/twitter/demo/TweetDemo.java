@@ -28,7 +28,7 @@ import org.vaadin.addon.twitter.Tweet;
 @Route(value = "tweet", layout = DemoUI.class)
 public class TweetDemo extends DemoComponent {
 
-    private String tweetId = "1284168618176057347";
+    private final String tweetId = "1284168618176057347";
 
 
     public TweetDemo() {

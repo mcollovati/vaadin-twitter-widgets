@@ -64,11 +64,6 @@ public class DynamicDemo extends Composite<HorizontalLayout> {
         ComboBox<Tweet.Conversation> conversation = buildCombobox(tweet.getConversation(), Tweet::withConversation);
         optionsForm.addFormItem(conversation, "Conversation");
 
-        TextField linkColor = new TextField();
-        linkColor.setPlaceholder("Color in HTML format (#FF00FF)");
-        linkColor.addValueChangeListener(event -> tweet.withLinkColor(event.getValue()));
-        optionsForm.addFormItem(linkColor, "Link color");
-
     }
 
     @SuppressWarnings("unchecked")

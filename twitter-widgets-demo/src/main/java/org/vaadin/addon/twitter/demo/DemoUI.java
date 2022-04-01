@@ -20,10 +20,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+import org.vaadin.addon.twitter.TweetButton;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -33,25 +34,22 @@ import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterListener;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Router;
 import com.vaadin.flow.router.RouterLayout;
-import org.vaadin.addon.twitter.TweetButton;
+import com.vaadin.flow.router.internal.HasUrlParameterFormat;
 
 @PageTitle("Twitter widgets Add-on Demo")
-@Viewport("width=device-width, user-scalable=no, initial-scale=1.0")
-@BodySize(height = "100vh", width = "100%")
 @JsModule("./shared-styles.js")
 @SuppressWarnings("serial")
 public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnterObserver {
 
     private final List<Markdown> markdown = Arrays.asList(
-        readMarkdown("timeline.md"), readMarkdown("single_tweet.md"), readMarkdown("follow_button.md"),
-        readMarkdown("share_button.md"), readMarkdown("hashtag_button.md"), readMarkdown("mention_button.md"),
-        readMarkdown("dynamic_opts.md")
+            readMarkdown("timeline.md"), readMarkdown("single_tweet.md"), readMarkdown("follow_button.md"),
+            readMarkdown("share_button.md"), readMarkdown("hashtag_button.md"), readMarkdown("mention_button.md"),
+            readMarkdown("dynamic_opts.md")
     );
     private final Div demoArea;
     private final Tabs tabs;
@@ -87,7 +85,7 @@ public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnte
 
 
         VerticalLayout demoView = new VerticalLayout(
-            tabs, demoArea
+                tabs, demoArea
         );
         add(info, demoView);
 
@@ -111,14 +109,14 @@ public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnte
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         tabs.getChildren()
-            .filter(PageTab.class::isInstance)
-            .map(PageTab.class::cast)
-            .filter(p -> p.isSelected(event))
-            .findFirst()
-            .ifPresent( t -> {
-                tabs.setSelectedTab(t);
-                updateInfoPanel();
-            });
+                .filter(PageTab.class::isInstance)
+                .map(PageTab.class::cast)
+                .filter(p -> p.isSelected(event))
+                .findFirst()
+                .ifPresent(t -> {
+                    tabs.setSelectedTab(t);
+                    updateInfoPanel();
+                });
     }
 
     @SuppressWarnings("unchecked")
@@ -138,7 +136,7 @@ public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnte
 
         void navigate(UI ui) {
             if (HasUrlParameter.class.isAssignableFrom(demoPage)) {
-                ui.navigate((Class)demoPage, parameter);
+                ui.navigate((Class) demoPage, parameter);
             } else {
                 ui.navigate(demoPage);
             }
@@ -148,9 +146,11 @@ public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnte
             String url;
             Router router = event.getSource();
             if (HasUrlParameter.class.isAssignableFrom(demoPage)) {
-                url = router.getUrl((Class)demoPage, parameter);
+                url = router.getRegistry()
+                        .getTargetUrl(demoPage, HasUrlParameterFormat.getParameters(parameter))
+                        .orElse(null);
             } else {
-                url = router.getUrl(demoPage);
+                url = router.getRegistry().getTargetUrl(demoPage).orElse(null);
             }
             return event.getLocation().getPath().equals(url);
         }
