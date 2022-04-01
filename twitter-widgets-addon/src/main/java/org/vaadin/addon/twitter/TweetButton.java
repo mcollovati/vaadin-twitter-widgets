@@ -21,8 +21,6 @@ import java.util.Objects;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.dom.Element;
-import com.vaadin.flow.dom.ElementFactory;
 
 /**
  * The Tweet button is a small button displayed on your website to help viewers
@@ -47,23 +45,15 @@ import com.vaadin.flow.dom.ElementFactory;
  */
 @Tag("tws-button")
 @JsModule("./src/tws-button.js")
-public final class TweetButton extends AbstractPolymerWidget<TweetButton> {
+public final class TweetButton extends AbstractWidget<TweetButton> {
 
 
     private TweetButton(String primaryArgument, Type buttonType) {
-
         setPrimaryArgument(Objects.requireNonNull(primaryArgument));
         getElement().setProperty("buttonType", Objects.requireNonNull(buttonType).toString());
         withCount(TweetButton.Count.horizontal);
         withSize(TweetButton.Size.medium);
         showScreenName();
-
-        // Empty DIV will be used as container for twitter button
-        // Should use SLOT because button is not rendered in Chrome
-        // when using shadow DOM
-        Element buttonContainer = ElementFactory.createDiv();
-        //buttonContainer.setAttribute("slot", "twsContainer");
-        getElement().appendChild(buttonContainer);
     }
 
     /**

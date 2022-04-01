@@ -15,19 +15,29 @@
  */
 package org.vaadin.addon.twitter;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 
-import com.vaadin.flow.server.DependencyFilter;
-import com.vaadin.flow.server.MockVaadinServletService;
-import com.vaadin.flow.server.ServiceException;
-import com.vaadin.flow.server.VaadinService;
-import com.vaadin.flow.shared.ui.Dependency;
-import com.vaadin.tests.util.MockDeploymentConfiguration;
+import com.helger.commons.io.resourceprovider.DefaultResourceProvider;
 import org.junit.Assert;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.mockito.Mockito;
+
+import com.vaadin.flow.di.DefaultInstantiator;
+import com.vaadin.flow.di.Lookup;
+import com.vaadin.flow.di.ResourceProvider;
+import com.vaadin.flow.function.DeploymentConfiguration;
+import com.vaadin.flow.server.ServiceException;
+import com.vaadin.flow.server.VaadinContext;
+import com.vaadin.flow.server.VaadinService;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class VaadinServiceRule implements TestRule {
 
@@ -64,7 +74,45 @@ public class VaadinServiceRule implements TestRule {
         this.service = null;
     }
 
+    protected VaadinService createService() throws ServiceException {
+        DeploymentConfiguration configuration = mock(DeploymentConfiguration.class);
+        when(configuration.isProductionMode()).thenReturn(false);
 
+        VaadinContext vaadinContext = mock(VaadinContext.class);
+        when(vaadinContext.getAttribute(Lookup.class)).thenReturn(Lookup.of(
+                new MockResourceProvider(), ResourceProvider.class));
+
+        VaadinService service = mock(VaadinService.class);
+        when(service.getDeploymentConfiguration()).thenReturn(configuration);
+        when(service.getInstantiator()).thenReturn(new DefaultInstantiator(service));
+        when(service.getContext()).thenReturn(vaadinContext);
+        return service;
+    }
+
+    private static class MockResourceProvider implements ResourceProvider {
+
+        @Override
+        public URL getApplicationResource(String path) {
+            return MockResourceProvider.class.getResource(path);
+        }
+
+        @Override
+        public List<URL> getApplicationResources(String path) throws IOException {
+            return Collections.list(MockResourceProvider.class.getClassLoader().getResources(path));
+        }
+
+        @Override
+        public URL getClientResource(String path) {
+            return MockResourceProvider.class.getResource(path);
+        }
+
+        @Override
+        public InputStream getClientResourceAsStream(String path) throws IOException {
+            return MockResourceProvider.class.getResourceAsStream(path);
+        }
+    }
+
+    /*
     protected VaadinService createService() throws ServiceException {
         //DeploymentConfiguration configuration = Mockito.mock(DeploymentConfiguration.class);
         //when(configuration.isProductionMode()).thenReturn(false);
@@ -103,8 +151,10 @@ public class VaadinServiceRule implements TestRule {
         when(service.getResourceAsStream(ArgumentMatchers.startsWith("frontend://src/"), any(), any()))
             .then(i -> Tweet.class.getResourceAsStream(
                 String.format("/META-INF/resources/%s", i.<String>getArgument(0).replace(":/", "")))
-            );*/
+            );
+
+      * /
         return service;
     }
-
+    */
 }

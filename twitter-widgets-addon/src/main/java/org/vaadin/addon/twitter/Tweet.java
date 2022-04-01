@@ -22,7 +22,7 @@ import com.vaadin.flow.component.dependency.JsModule;
 
 @Tag("tws-tweet")
 @JsModule("./src/tws-tweet.js")
-public class Tweet extends AbstractPolymerWidget<Tweet> {
+public class Tweet extends AbstractWidget<Tweet> {
 
     /**
      * Creates a new component to embed a single Tweet.
@@ -67,7 +67,7 @@ public class Tweet extends AbstractPolymerWidget<Tweet> {
      */
     public Tweet withAlign(Alignment align) {
         getElement().setProperty(
-            "align", Objects.requireNonNull(align, "align must not be null").toString()
+                "align", Objects.requireNonNull(align, "align must not be null").toString()
         );
         return this;
     }
@@ -93,7 +93,7 @@ public class Tweet extends AbstractPolymerWidget<Tweet> {
      */
     public Tweet withConversation(Conversation conversation) {
         getElement().setProperty(
-            "conversation", Objects.requireNonNull(conversation, "conversation must not be null").toString()
+                "conversation", Objects.requireNonNull(conversation, "conversation must not be null").toString()
         );
         return this;
     }
@@ -136,7 +136,7 @@ public class Tweet extends AbstractPolymerWidget<Tweet> {
      */
     public Tweet withCards(Cards cards) {
         getElement().setProperty(
-            "cards", Objects.requireNonNull(cards, "cards must not be null").toString()
+                "cards", Objects.requireNonNull(cards, "cards must not be null").toString()
         );
         return this;
     }
@@ -169,26 +169,6 @@ public class Tweet extends AbstractPolymerWidget<Tweet> {
     }
 
     /**
-     * Adjust the color of links inside the widget.
-     *
-     * @param linkColor the color to apply to the links
-     * @return the object itself for further configuration
-     */
-    public Tweet withLinkColor(String linkColor) {
-        getElement().setProperty("linkColor", linkColor);
-        return this;
-    }
-
-    /**
-     * Returns the color to apply to the links.
-     *
-     * @return the color to apply to the links
-     */
-    public String getLinkColor() {
-        return getElement().getProperty("linkColor");
-    }
-
-    /**
      * Set the colorscheme of the widget.
      *
      * Defaults to {@link Theme#light}.
@@ -198,7 +178,7 @@ public class Tweet extends AbstractPolymerWidget<Tweet> {
      */
     public Tweet withTheme(Theme theme) {
         getElement().setProperty(
-            "theme", Objects.requireNonNull(theme, "theme must not be null").toString()
+                "theme", Objects.requireNonNull(theme, "theme must not be null").toString()
         );
         return this;
     }

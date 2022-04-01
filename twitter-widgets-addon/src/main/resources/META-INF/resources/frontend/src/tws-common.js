@@ -1,86 +1,107 @@
-import { idlePeriod } from '@polymer/polymer/lib/utils/async.js';
-import {Debouncer} from '@polymer/polymer/lib/utils/debounce.js';
+import { html, css } from 'lit';
 
 export const TwsCommonsMixin = (superClass) => class extends superClass {
 
-    constructor() {
-        super();
-        this._commonOptsNames = [
-            { key: "doNotTrack", remapKey: "dnt" },
-            { key: "language", remapKey: "lang" },
-            { key: "hashtags", map: this._arrayToStringList },
-            { key: "related", map: this._arrayToStringList },
-            "via"
-        ];
-        this.__createOptionsProperty();
-    }
-
-    static get optsNames() {
-        return [];
-    }
-
     static get properties() {
         return {
-            primaryArgument: String,
-            doNotTrack: Boolean,
-            language: String,
-            hashtags: Array,
-            related: Array,
-            via: String
+            primaryArgument: {type: String},
+            dnt: { type: Boolean },
+            lang: { type: String },
+            hashtags: { type: Array },
+            related: { type: Array },
+            via: { type: String }
         }
     }
 
-    static get observers() {
-        return [
-            'optionsChanged(options)'
-        ]
+    static get styles() {
+        return css`
+            :host {
+                --loader-color: rgb(142, 16, 16);
+            }
+            .lds-dual-ring {
+              display: inline-block;
+              width: 40px;
+              height: 40px;
+            }
+            .lds-dual-ring:after {
+              content: " ";
+              display: block;
+              width: 32px;
+              height: 32px;
+              margin: 4px;
+              border-radius: 50%;
+              border: 2px solid var(--loader-color);
+              border-color: var(--loader-color) transparent #fff transparent;
+              animation: lds-dual-ring 1.2s linear infinite;
+            }
+            @keyframes lds-dual-ring {
+              0% {
+                transform: rotate(0deg);
+              }
+              100% {
+                transform: rotate(360deg);
+              }
+            }
+             #preview {
+                 width: 100%;
+                 text-align: center;
+             }
+        `
     }
 
-    _identityFn(a) { return a; }
+    // Rendering tweet on shadow DOM does not work well with Chrome:
+    // the rendered iframe has size 0 and is not visible
+    // as a workaround the button is rendered in a DIV
+    // supplied by as slot item
+    render() {
+        return html`
+            <slot></slot><div id="preview">${this.__previewTemplate()}</div>
+        `;
+    }
 
-    _arrayToStringList (arr) { return (arr || []).join(","); }
+    __widgetLoaded() {
+        this.preview = this.shadowRoot.querySelector("#preview");
+        this.shadowRoot.removeChild(this.preview);
+    }
 
-    __applyOptions(opts) {
-        opts = opts || {};
-        const optsNames = this._commonOptsNames.concat(this._optsNames || []);
-        optsNames.forEach(optObj => {
-            const key = optObj.key || optObj;
-            const remappedKey = optObj.remapKey || key;
-            const mapFn = optObj.map || this._identityFn;
-            if (opts.hasOwnProperty(key) && (opts[key] === false || opts[key])) {
-                opts[remappedKey] = mapFn(opts[key]);
+    __previewTemplate() {
+        return html`<div class="lds-dual-ring"></div>`
+    }
+    __applyOptions() {
+        const applyConversion = (obj) => {
+            if (Array.isArray(obj)) {
+                return (obj || []).join(",");
+            }
+            return obj;
+        }
+        const opts = {};
+        this.constructor.elementProperties.forEach( (type, key) => {
+            if (!key.startsWith("_")) {
+                const val = applyConversion(this[key]);
+                if (val) {
+                    opts[key] = val;
+                }
             }
         });
         return opts;
     }
 
-    // Render the widget whenever an option has changed
-    optionsChanged(opts) {
-        this._debouncer = Debouncer.debounce(
-            this._debouncer, // initially undefined
-            idlePeriod,
-            () => window.twttr.ready(() => this._render(this.__applyOptions(opts)))
-        );
-    }
+    updated(changedProperties) {
+        if (this.preview) {
+            this.shadowRoot.appendChild(this.preview);
+        }
+        const element = this.shadowRoot.querySelector('slot').assignedElements()[0];
+        window.twttr.ready(() => {
+            this.__createWidget(element, this.__applyOptions())
+              .then(el => {
+                this.__widgetLoaded();
+                // TODO: fire server event
+              }, err => {
+                console.log("Error loading button", err);
+                // TODO: fire server event
+              });
 
-    __buildOptions(optsNames, optsValues) {
-        const opts = {};
-        optsNames.forEach( (el, idx) => opts[el] = optsValues[idx] );
-        return opts;
-    }
-
-    // Dynamically create a property 'options` as an object that
-    // contains all properties whose value change should trigger
-    // a rendering action
-    __createOptionsProperty() {
-        const propNames = this._commonOptsNames.concat(this.constructor.optsNames || {}).map(o => o.key || o );
-        this['_computeOptionsProperty'] = Function.apply(this,
-            propNames.concat([
-            `return this.__buildOptions([${propNames.map(e => `'${e}'`).join(',')}], Array.from(arguments));`
-        ]));
-        const optionsComputedPropertyFn = `_computeOptionsProperty(${propNames.join(',')})`;
-        this._createComputedProperty('options', optionsComputedPropertyFn, true);
-
+        });
     }
 
 }

@@ -25,16 +25,15 @@ import java.util.stream.Stream;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.littemplate.LitTemplate;
-import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.dom.Element;
+import com.vaadin.flow.dom.ElementFactory;
 import com.vaadin.flow.internal.JsonUtils;
-import com.vaadin.flow.templatemodel.TemplateModel;
 
 import elemental.json.Json;
 import elemental.json.JsonArray;
 import elemental.json.JsonType;
 import elemental.json.JsonValue;
 import elemental.json.impl.JsonUtil;
-
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
@@ -44,17 +43,21 @@ import static java.util.stream.Collectors.toList;
  * @param <T> the type of the concrete widget
  */
 
-public abstract class AbstractWidget<T extends AbstractWidget> extends LitTemplate
+public abstract class AbstractWidget<T extends AbstractWidget<T>> extends LitTemplate
         implements HasSize, HasStyle {
 
     public static final String DEFAULT_LANGUAGE = "en";
 
     protected AbstractWidget() {
-        super();
         withLanguage(DEFAULT_LANGUAGE);
         withDoNotTrack(false);
         withoutHashtags();
         withoutRelated();
+        // Empty DIV will be used as container for twitter button
+        // Should use SLOT because button is not rendered in Chrome
+        // when using shadow DOM
+        Element buttonContainer = ElementFactory.createDiv();
+        getElement().appendChild(buttonContainer);
     }
 
     protected final void setPrimaryArgument(String primaryArgument) {
@@ -66,12 +69,12 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends LitTempla
     }
 
     public T withLanguage(String language) {
-        getElement().setProperty("language", language);
+        getElement().setProperty("lang", language);
         return self();
     }
 
     public String getLanguage() {
-        return getElement().getProperty("language", DEFAULT_LANGUAGE);
+        return getElement().getProperty("lang", DEFAULT_LANGUAGE);
     }
 
     /**
@@ -83,7 +86,7 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends LitTempla
      * @return the object itself for further configuration
      */
     public T withDoNotTrack(boolean doNotTrack) {
-        getElement().setProperty("doNotTrack", doNotTrack);
+        getElement().setProperty("dnt", doNotTrack);
         return self();
     }
 
@@ -114,7 +117,7 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends LitTempla
      * @see #withDoNotTrack(boolean)
      */
     public boolean isDoNotTrack() {
-        return getElement().getProperty("doNotTrack", false);
+        return getElement().getProperty("dnt", false);
     }
 
     /**
@@ -167,7 +170,7 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends LitTempla
      * @return the object itself for further configuration
      */
     public T removeRelated(String... related) {
-        removeFromStringList("hashtag", related);
+        removeFromStringList("related", related);
         return self();
     }
 
@@ -187,7 +190,7 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends LitTempla
      * @return the object itself for further configuration
      */
     public T withHashtag(String... hashtag) {
-        setStringList("hashtag", Stream.of(hashtag));
+        setStringList("hashtags", Stream.of(hashtag));
         return self();
     }
 
@@ -198,7 +201,7 @@ public abstract class AbstractWidget<T extends AbstractWidget> extends LitTempla
      * @return the object itself for further configuration
      */
     public T removeHashtag(String... hashtag) {
-        removeFromStringList("hashtag", hashtag);
+        removeFromStringList("hashtags", hashtag);
         return self();
     }
 

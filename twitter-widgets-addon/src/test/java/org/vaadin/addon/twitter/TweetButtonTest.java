@@ -32,44 +32,60 @@ public class TweetButtonTest {
     @Test
     public void primaryArgumentIsMandatoryForButtons() {
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> TweetButton.follow(null));
+                .isThrownBy(() -> TweetButton.follow(null));
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> TweetButton.share((String) null));
+                .isThrownBy(() -> TweetButton.share((String) null));
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> TweetButton.share((URL) null));
+                .isThrownBy(() -> TweetButton.share((URL) null));
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> TweetButton.hashtag(null));
+                .isThrownBy(() -> TweetButton.hashtag(null));
         assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> TweetButton.mention(null));
+                .isThrownBy(() -> TweetButton.mention(null));
     }
 
     @Test
     public void buttonCreation() throws MalformedURLException {
         assertThat(TweetButton.follow("me"))
-            .extracting("type", "primaryArgument")
-            .contains(TweetButton.Type.Follow, "me");
+                .extracting("type", "primaryArgument")
+                .contains(TweetButton.Type.Follow, "me");
         assertThat(TweetButton.share(new URL("http://www.google.it")))
-            .extracting("type", "primaryArgument")
-            .contains(TweetButton.Type.Share, "http://www.google.it");
+                .extracting("type", "primaryArgument")
+                .contains(TweetButton.Type.Share, "http://www.google.it");
         assertThat(TweetButton.share("http://www.google.it"))
-            .extracting("type", "primaryArgument")
-            .contains(TweetButton.Type.Share, "http://www.google.it");
+                .extracting("type", "primaryArgument")
+                .contains(TweetButton.Type.Share, "http://www.google.it");
         assertThat(TweetButton.hashtag("vaadin"))
-            .extracting("type", "primaryArgument")
-            .contains(TweetButton.Type.Hashtag, "vaadin");
+                .extracting("type", "primaryArgument")
+                .contains(TweetButton.Type.Hashtag, "vaadin");
         assertThat(TweetButton.mention("marcoc_753"))
-            .extracting("type", "primaryArgument")
-            .contains(TweetButton.Type.Mention, "marcoc_753");
+                .extracting("type", "primaryArgument")
+                .contains(TweetButton.Type.Mention, "marcoc_753");
+    }
+
+    @Test
+    public void assignHashtags() {
+        TweetButton button = TweetButton.hashtag("testme").withHashtag("vaadindirectory", "add-on");
+        assertThat(button.getPrimaryArgument()).isEqualTo("testme");
+        assertThat(button.getHastags())
+                .containsOnly("vaadindirectory", "add-on");
+    }
+
+    @Test
+    public void assignRelated() {
+        TweetButton button = TweetButton.hashtag("testme").withRelated("twitterapi", "twitter");
+        assertThat(button.getPrimaryArgument()).isEqualTo("testme");
+        assertThat(button.getRelated())
+                .containsOnly("twitterapi", "twitter");
     }
 
     @Test
     public void shareButtonShouldHaveValidURL() {
         assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> TweetButton.share("ciao"));
+                .isThrownBy(() -> TweetButton.share("ciao"));
         assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> TweetButton.share(""));
+                .isThrownBy(() -> TweetButton.share(""));
         assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> TweetButton.share("http://"));
+                .isThrownBy(() -> TweetButton.share("http://"));
     }
 
 
