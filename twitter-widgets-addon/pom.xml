@@ -193,36 +193,4 @@
 
     </build>
 
-    <profiles>
-        <profile>
-            <id>migrate-to-v14</id>
-            <activation>
-                <property>
-                    <name>doMigrate</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.vaadin</groupId>
-                        <artifactId>vaadin-maven-plugin</artifactId>
-                        <version>${vaadin.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>migrate-to-p3</goal>
-                                </goals>
-                                <phase>initialize</phase>
-                                <configuration>
-                                    <resources>${project.basedir}/src/main/resources/META-INF/resources/frontend/src</resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
 </project>
