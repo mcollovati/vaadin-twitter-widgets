@@ -12,7 +12,7 @@ on Twitter into your application.
 
 A Single Tweet may be customized from its default settings with fluent accessors.
 
-See [javadocs](https://vaadindemo-mbf.rhcloud.com/docs/twitter-widgets/api/org/vaadin/addon/twitter/Tweet.html) 
+See [javadocs](https://mbf-vaadindemo.herokuapp.com/docs/twitter-widgets/api/org/vaadin/addon/twitter/Tweet.html) 
 for further information.
  
 ## Usage

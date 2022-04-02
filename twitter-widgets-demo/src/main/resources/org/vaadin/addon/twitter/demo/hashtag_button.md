@@ -12,7 +12,7 @@ A [hashtag button](https://dev.twitter.com/web/tweet-button/hashtag-button) is a
 
 A hashtag button may be customized from its default settings with fluent accessors.
 
-See [javadocs](https://vaadindemo-mbf.rhcloud.com/docs/twitter-widgets/api/org/vaadin/addon/twitter/TweetButton.html) 
+See [javadocs](https://mbf-vaadindemo.herokuapp.com/docs/twitter-widgets/api/org/vaadin/addon/twitter/TweetButton.html) 
 for further information.
 
  

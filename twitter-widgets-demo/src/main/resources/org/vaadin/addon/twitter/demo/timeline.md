@@ -10,7 +10,7 @@ This demo is powered by [Viritin](https://vaadin.com/directory#!addon/viritin).
 [Embedded timelines](https://dev.twitter.com/web/embedded-timelines) are an easy way to embed 
 multiple Tweets on your application in a compact, single-column view.
 
-See [javadocs](https://vaadindemo-mbf.rhcloud.com/docs/twitter-widgets/api/org/vaadin/addon/twitter/Timeline.html) 
+See [javadocs](https://mbf-vaadindemo.herokuapp.com/docs/twitter-widgets/api/org/vaadin/addon/twitter/Timeline.html) 
 for further information.
 
 ### User timeline

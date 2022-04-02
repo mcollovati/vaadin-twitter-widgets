@@ -36,7 +36,7 @@ import org.vaadin.addon.twitter.TweetButton;
 @Route(value = "button", layout = DemoUI.class)
 public class ButtonDemo extends DemoComponent implements HasUrlParameter<String> {
 
-    private static String url = "https://vaadindemo-mbf.rhcloud.com/twitter-widgets/";
+    private static final String url = "https://mbf-vaadin-twitter-widgets.herokuapp.com/";
     private static final Map<TweetButton.Type, Consumer<HasComponents>> generatorMap = new HashMap<>();
 
     static {
