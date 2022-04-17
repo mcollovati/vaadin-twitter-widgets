@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasStyle;
-import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.dom.ElementFactory;
 import com.vaadin.flow.internal.JsonUtils;
@@ -43,7 +43,7 @@ import static java.util.stream.Collectors.toList;
  * @param <T> the type of the concrete widget
  */
 
-public abstract class AbstractWidget<T extends AbstractWidget<T>> extends LitTemplate
+public abstract class AbstractWidget<T extends AbstractWidget<T>> extends Component
         implements HasSize, HasStyle {
 
     public static final String DEFAULT_LANGUAGE = "en";
