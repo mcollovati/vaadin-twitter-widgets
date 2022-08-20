@@ -17,4 +17,14 @@ buildNumber.properties
 **/VAADIN/themes/**/*.scss.cache
 node/
 node_modules/
-webpack*
+
+demos/**/package.json
+demos/**/package-lock.json
+demos/**/pnpm-lock.yaml
+demos/**/pnpmfile.js
+demos/**/tsconfig.json
+demos/**/types.d.ts
+demos/**/webpack.*.js
+demos/**/vite.*.js
+demos/**/frontend/
+

@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.vaadin.addon</groupId>
-        <artifactId>twitter-widgets-root</artifactId>
+        <artifactId>twitter-widgets-demos</artifactId>
         <version>3.0.2-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>twitter-widgets-demo</artifactId>
+    <artifactId>twitter-widgets-jetty-demo</artifactId>
     <packaging>war</packaging>
     <name>Twitter widgets for Vaadin Demo</name>
 
@@ -33,16 +33,8 @@
     <dependencies>
         <dependency>
             <groupId>org.vaadin.addon</groupId>
-            <artifactId>twitter-widgets</artifactId>
+            <artifactId>twitter-widgets-demo-commons</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-push</artifactId>
         </dependency>
 
         <dependency>
