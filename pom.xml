@@ -60,6 +60,7 @@
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <license-maven-plugin.version>4.1</license-maven-plugin.version>
+        <jandex-maven-plugin.version>1.2.3</jandex-maven-plugin.version>
         <junit.version>4.13.2</junit.version>
         <assertj.version>3.22.0</assertj.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
@@ -202,6 +203,11 @@
                         <failsOnError>false</failsOnError>
                         <linkXRef>false</linkXRef>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.jboss.jandex</groupId>
+                    <artifactId>jandex-maven-plugin</artifactId>
+                    <version>${jandex-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

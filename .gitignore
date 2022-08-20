@@ -18,6 +18,16 @@ buildNumber.properties
 node/
 node_modules/
 
+twitter-widgets-addon/package.json
+twitter-widgets-addon/package-lock.json
+twitter-widgets-addon/pnpm-lock.yaml
+twitter-widgets-addon/pnpmfile.js
+twitter-widgets-addon/tsconfig.json
+twitter-widgets-addon/types.d.ts
+twitter-widgets-addon/webpack.*.js
+twitter-widgets-addon/vite.*.js
+twitter-widgets-addon/frontend/
+
 demos/**/package.json
 demos/**/package-lock.json
 demos/**/pnpm-lock.yaml
