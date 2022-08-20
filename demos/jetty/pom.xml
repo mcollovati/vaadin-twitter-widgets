@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.vaadin.addon</groupId>
         <artifactId>twitter-widgets-demos</artifactId>
-        <version>3.0.2-SNAPSHOT</version>
+        <version>3.0.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>twitter-widgets-jetty-demo</artifactId>
@@ -119,4 +119,8 @@
         </profile>
     </profiles>
 
+
+  <scm>
+    <tag>v3.0.2</tag>
+  </scm>
 </project>
