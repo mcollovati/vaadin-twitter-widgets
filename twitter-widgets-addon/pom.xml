@@ -19,7 +19,7 @@
         <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
         <Vaadin-License-Title>Apache License 2.0</Vaadin-License-Title>
         <Vaadin-Addon>${project.artifactId}-${project.version}.jar</Vaadin-Addon>
-        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
     </properties>
 
 
@@ -50,9 +50,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet-api.version}</version>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>${jakarta.servlet-api.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

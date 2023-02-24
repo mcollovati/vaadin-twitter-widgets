@@ -14,7 +14,7 @@
     <name>Twitter widgets for Vaadin Quarkus Demo</name>
 
     <properties>
-        <quarkus.version>2.7.4.Final</quarkus.version>
+        <quarkus.version>3.0.0.Alpha3</quarkus.version>
     </properties>
 
     <dependencyManagement>

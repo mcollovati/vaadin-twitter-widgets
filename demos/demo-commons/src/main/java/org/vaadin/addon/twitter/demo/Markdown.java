@@ -23,9 +23,9 @@ import com.vaadin.flow.component.dependency.NpmPackage;
 
 @Tag("markdown-element")
 @NpmPackage.Container(value = {
-    @NpmPackage(value = "@polymer/marked-element", version = "3.0.1"),
-    @NpmPackage(value = "highlight.js", version = "10.1.1")
-})
+        @NpmPackage(value = "markdown-it", version = "13.0.1"),
+        @NpmPackage(value = "markdown-it-highlightjs", version = "4.0.1"),
+        @NpmPackage(value = "highlight.js", version = "11.7.0") })
 @CssImport(value = "highlight.js/styles/github.css", themeFor = "markdown-element")
 @JsModule("./markdown-template.js")
 public class Markdown extends Component {

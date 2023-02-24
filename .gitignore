@@ -1,6 +1,8 @@
 
 # Created by https://www.gitignore.io/api/maven
 
+.idea/
+
 ### Maven ###
 target/
 pom.xml.tag
@@ -25,7 +27,7 @@ twitter-widgets-addon/pnpmfile.js
 twitter-widgets-addon/tsconfig.json
 twitter-widgets-addon/types.d.ts
 twitter-widgets-addon/webpack.*.js
-twitter-widgets-addon/vite.*.js
+twitter-widgets-addon/vite.*.ts
 twitter-widgets-addon/frontend/
 
 demos/**/package.json
@@ -35,6 +37,6 @@ demos/**/pnpmfile.js
 demos/**/tsconfig.json
 demos/**/types.d.ts
 demos/**/webpack.*.js
-demos/**/vite.*.js
+demos/**/vite.*.ts
 demos/**/frontend/
 
