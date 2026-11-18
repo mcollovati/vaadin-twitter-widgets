@@ -23,9 +23,6 @@ const datasourceGenerators = {
     },
     url: function(ds, state) {
         ds.url = state.primaryArgument;
-    },
-    widget: function(ds, state) {
-        ds.widgetId = state.primaryArgument;
     }
 };
 const createDataSource = function(state) {

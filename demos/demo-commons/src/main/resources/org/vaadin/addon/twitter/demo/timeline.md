@@ -50,12 +50,6 @@ Timeline.list("vaadin", "vaadin-users");
 ```
 
 
-### Widget timeline
-
-```java
-Timeline.widget("738372609797173249");
-```
-
 ### URL timeline
 
 ```java

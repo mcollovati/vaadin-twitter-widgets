@@ -108,23 +108,6 @@ public class TimelineTest {
     }
 
     @Test
-    public void createWidgetTimeline() throws Exception {
-        Timeline timeline = Timeline.widget("123456");
-        assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("123456");
-        assertThat(timeline.getDatasource()).isEqualTo(Timeline.Datasource.widget);
-    }
-
-    @Test
-    public void widgetTimelineCreationShouldFailWithInvalidArguments() {
-        assertThatExceptionOfType(NullPointerException.class)
-            .isThrownBy(() -> Timeline.widget(null));
-        assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> Timeline.widget(""))
-            .withMessageContaining("must no be empty or blank");
-        // TODO: check long?
-    }
-
-    @Test
     public void createListTimeline() throws Exception {
         Timeline timeline = Timeline.list("username", "listname");
         assertThat(timeline.getDatasourcePrimaryArgument()).isEqualTo("listname@username");

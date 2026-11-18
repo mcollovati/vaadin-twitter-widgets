@@ -15,12 +15,16 @@
  */
 package org.vaadin.addon.twitter.demo;
 
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.BodySize;
 import com.vaadin.flow.component.page.Viewport;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 @Viewport("width=device-width, user-scalable=no, initial-scale=1.0")
 @BodySize(height = "100vh", width = "100%")
+@StyleSheet(Lumo.STYLESHEET)
+@StyleSheet("styles/demo.css")
 public class AppShell implements AppShellConfigurator {
 
 }

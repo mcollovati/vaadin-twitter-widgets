@@ -1,0 +1,39 @@
+.tw-docs {
+    font-size: 90%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.root-container {
+    padding: 10px;
+}
+
+.centered-caption {
+    text-align: center;
+}
+
+.primary-text {
+    color: var(--lumo-primary-text-color);
+}
+
+.font-size-l {
+    font-size: var(--lumo-font-size-l);
+}
+
+.tw-demo-tab {
+    margin: 10px;
+    flex-wrap: wrap;
+}
+
+.tw-widget {
+    width: 300px;
+    margin: 0 20px 20px 20px;
+}
+
+.tw-timeline {
+    overflow-y: scroll;
+}
+
+.tw-single-tweet {
+    min-height: 250px;
+}
