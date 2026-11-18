@@ -61,7 +61,8 @@
         <jandex-maven-plugin.version>3.6.1</jandex-maven-plugin.version>
         <junit.version>4.13.2</junit.version>
         <assertj.version>3.27.7</assertj.version>
-        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
+        <checkstyle.version>14.4.0</checkstyle.version>
         <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
         <mockito.version>5.24.0</mockito.version>
     </properties>
@@ -191,12 +192,18 @@
                 <plugin>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>${maven-checkstyle-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
                     <configuration>
                         <configLocation>${project.parent.relativePath}/checkstyle/vaadin-checkstyle.xml</configLocation>
                         <headerLocation>${project.parent.relativePath}/checkstyle/license.txt</headerLocation>
-                        <suppressionsLocation>${project.parent.relativePath}/checkstyle/suppressions.xml
-                        </suppressionsLocation>
-                        <encoding>UTF-8</encoding>
+                        <suppressionsLocation>${project.parent.relativePath}/checkstyle/suppressions.xml</suppressionsLocation>
+                        <inputEncoding>UTF-8</inputEncoding>
                         <consoleOutput>false</consoleOutput>
                         <failsOnError>false</failsOnError>
                         <linkXRef>false</linkXRef>
