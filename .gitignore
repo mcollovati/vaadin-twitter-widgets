@@ -40,3 +40,6 @@ demos/**/webpack.*.js
 demos/**/vite.*.ts
 demos/**/frontend/
 
+
+# Vaadin 25 generated frontend bundles
+demos/**/src/main/bundles/

@@ -21,7 +21,6 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import com.helger.commons.io.resourceprovider.DefaultResourceProvider;
 import org.junit.Assert;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;

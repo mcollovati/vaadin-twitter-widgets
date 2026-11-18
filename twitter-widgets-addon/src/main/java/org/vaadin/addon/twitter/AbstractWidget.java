@@ -27,13 +27,9 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.dom.ElementFactory;
-import com.vaadin.flow.internal.JsonUtils;
 
-import elemental.json.Json;
-import elemental.json.JsonArray;
-import elemental.json.JsonType;
-import elemental.json.JsonValue;
-import elemental.json.impl.JsonUtil;
+import tools.jackson.core.type.TypeReference;
+
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
@@ -47,6 +43,9 @@ public abstract class AbstractWidget<T extends AbstractWidget<T>> extends Compon
         implements HasSize, HasStyle {
 
     public static final String DEFAULT_LANGUAGE = "en";
+
+    private static final TypeReference<List<String>> STRING_LIST = new TypeReference<>() {
+    };
 
     protected AbstractWidget() {
         withLanguage(DEFAULT_LANGUAGE);
@@ -250,9 +249,7 @@ public abstract class AbstractWidget<T extends AbstractWidget<T>> extends Compon
 
 
     protected void setStringList(String propertyName, Stream<String> data) {
-        getElement().setPropertyJson(
-                propertyName, data.map(Json::create).collect(JsonUtils.asArray())
-        );
+        getElement().setPropertyList(propertyName, data.collect(toList()));
     }
 
     protected void clearStringList(String propertyName) {
@@ -266,12 +263,11 @@ public abstract class AbstractWidget<T extends AbstractWidget<T>> extends Compon
     }
 
     protected List<String> getStringList(String propertyName) {
-        JsonValue related = JsonUtil.parse(getElement().getProperty(propertyName, "[]"));
-        if (JsonType.ARRAY.equals(related.getType())) {
-            return JsonUtils.stream((JsonArray) related).map(JsonValue::asString)
-                    .collect(toList());
+        if (getElement().getPropertyRaw(propertyName) == null) {
+            return emptyList();
         }
-        return emptyList();
+        List<String> values = getElement().getPropertyBean(propertyName, STRING_LIST);
+        return values != null ? values : emptyList();
     }
 
 }

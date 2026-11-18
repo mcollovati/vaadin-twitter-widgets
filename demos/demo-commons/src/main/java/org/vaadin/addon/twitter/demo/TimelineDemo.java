@@ -15,7 +15,7 @@
  */
 package org.vaadin.addon.twitter.demo;
 
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -45,8 +45,6 @@ public class TimelineDemo extends DemoComponent {
                 Timeline.collection("393773266801659904")),
             createTimeline("URL Timeline",
                 Timeline.url("https://twitter.com/twitterdev/likes")),
-            createTimeline("Widget Timeline",
-                Timeline.widget("738372609797173249")),
             createTimeline("List Timeline",
                 Timeline.list("vaadin", "vaadin-users"))
         );
@@ -59,7 +57,7 @@ public class TimelineDemo extends DemoComponent {
         timeline.addClassNames("tw-timeline", "tw-widget");
         timeline.setHeight("400px");
 
-        Label label = new Label(caption);
+        Span label = new Span(caption);
         label.addClassNames("centered-caption", "font-size-l", "primary-text");
         verticalLayout.add(label, timeline);
         verticalLayout.setAlignItems(FlexComponent.Alignment.CENTER);

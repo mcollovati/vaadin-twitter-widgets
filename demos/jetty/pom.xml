@@ -12,8 +12,8 @@
     <name>Twitter widgets for Vaadin Demo</name>
 
     <properties>
-        <jetty.plugin.version>11.0.13</jetty.plugin.version>
-        <servlet-api.version>6.0.0</servlet-api.version>
+        <jetty.plugin.version>12.1.15</jetty.plugin.version>
+        <servlet-api.version>6.1.0</servlet-api.version>
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
 
@@ -36,11 +36,16 @@
             <artifactId>twitter-widgets-demo-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-dev</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.5</version>
+            <version>1.5.21</version>
         </dependency>
         <dependency>
             <groupId>jakarta.servlet</groupId>
@@ -56,8 +61,8 @@
             <!-- The Jetty plugin allows us to easily test the development build by -->
             <!-- running jetty:run on the command line. -->
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
+                <groupId>org.eclipse.jetty.ee11</groupId>
+                <artifactId>jetty-ee11-maven-plugin</artifactId>
                 <version>${jetty.plugin.version}</version>
                 <configuration>
                     <stopKey>STOP</stopKey>

@@ -116,16 +116,6 @@ public final class Timeline extends AbstractWidget<Timeline> {
     }
 
     /**
-     * Creates a timeline with a timeline widget configuration.
-     *
-     * @param widgetId A valid Twitter widget id
-     * @return a timeline instance
-     */
-    public static Timeline widget(String widgetId) {
-        return new Timeline(Datasource.widget, widgetId);
-    }
-
-    /**
      * Creates a timeline with a Twitter list.
      *
      * @param screenName A valid Twitter screen name
@@ -156,7 +146,7 @@ public final class Timeline extends AbstractWidget<Timeline> {
      * Returns the datasource primary argument.
      *
      * Depending on {@link Datasource} type could be a screen name, a collection id,
-     * an url, a widget id or a combination of screenName and slug (slugId@screenName).
+     * an url or a combination of screenName and slug (slugId@screenName).
      *
      * @return the datasource primary argument as string.
      */
@@ -339,13 +329,7 @@ public final class Timeline extends AbstractWidget<Timeline> {
          * Primary argument must be a permalink to one of a profile,
          * likes timeline, list, or collection.
          */
-        url,
-        /**
-         * Use a timeline widget configuration.
-         *
-         * Primary argument must be a valid widget id.
-         */
-        widget
+        url
     }
 
     /**

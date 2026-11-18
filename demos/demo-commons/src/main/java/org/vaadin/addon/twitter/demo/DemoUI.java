@@ -25,7 +25,6 @@ import org.vaadin.addon.twitter.TweetButton;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -42,7 +41,6 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.internal.HasUrlParameterFormat;
 
 @PageTitle("Twitter widgets Add-on Demo")
-@JsModule("./shared-styles.js")
 @SuppressWarnings("serial")
 public class DemoUI extends HorizontalLayout implements RouterLayout, BeforeEnterObserver {
 

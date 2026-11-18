@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEvent;
@@ -62,7 +62,7 @@ public class ButtonDemo extends DemoComponent implements HasUrlParameter<String>
     }
 
     private static Component makeButtonContainer(TweetButton tweetButton, String caption) {
-        Label label = new Label(caption);
+        Span label = new Span(caption);
         label.setWidth(null);
         label.addClassNames("centered-caption", "font-size-l", "primary-text");
         VerticalLayout div = new VerticalLayout(label,
